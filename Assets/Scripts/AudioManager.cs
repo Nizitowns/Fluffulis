@@ -26,12 +26,12 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            //currentTrack++;
-            //PlayMusic(currentTrack);
-            PlaySFX(0);
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    currentTrack++;
+        //    PlayMusic(currentTrack);
+        //    PlaySFX(0);
+        //}
     }
 
     public void PlayMusic(int musicToPlay)
