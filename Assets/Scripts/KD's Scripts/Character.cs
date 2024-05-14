@@ -14,7 +14,6 @@ public class Character : MonoBehaviour
     [SerializeField] public float gravity = 9.81f;
 
     private Transform cameraTransform;
-    private Vector3 currentLook;
     private Vector3 currentTarget;
     public Vector2 rawMove { get; private set; }
     private void Awake()
@@ -27,7 +26,6 @@ public class Character : MonoBehaviour
     {
         cameraTransform = Camera.main.transform;
         gravityVector = Vector3.down * gravity;
-        currentLook = transform.forward;
         currentTarget = model.forward;
     }    
     private void Update()
@@ -46,21 +44,18 @@ public class Character : MonoBehaviour
 
     private void FaceDirection(Vector3 direction)
     {
-        if(direction.x == 0 && direction.z == 0) {  }
+        if(Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) {  }
         else { currentTarget = direction; }
-        //float angle = Vector3.Angle(currentLook, currentTarget);
-        ////Debug.Log("angle: " + angle);
-        //currentLook = Vector3.Lerp(currentLook, currentTarget, Time.deltaTime);
-        //model.LookAt(model.position + currentLook);
         model.LookAt(model.position + currentTarget);
-        //model.LookAt(Vector3.Lerp(model.localRotation * model.forward + transform.position, target, Time.deltaTime));
-        Debug.DrawRay(model.position, currentLook * 10f, Color.red);
-        Debug.DrawRay(model.position, currentTarget * 5f, Color.blue);
+        Debug.DrawLine(model.position, model.position + currentTarget * 5);
+
     }
     private Vector3 GetDirection()
     {
-
-        return cameraTransform.right * rawMove.x + cameraTransform.forward * rawMove.y;
+        Vector3 camToChar = (transform.position) - (cameraTransform.position); 
+        Vector3 yDirection = (new Vector3(camToChar.x, 0, camToChar.z)).normalized;
+        Vector3 xDirection = (Quaternion.Euler(new Vector3(0,90,0)) * yDirection).normalized;
+        return xDirection * rawMove.x + yDirection * rawMove.y;
     }
     private void OnEnable()
     {
