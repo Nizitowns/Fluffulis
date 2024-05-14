@@ -1,8 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    private Vector3 respawnPosition;
 
     private void Awake()
     {
@@ -14,6 +17,8 @@ public class GameManager : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        respawnPosition = Player.Instance.transform.position;
     }
 
     // Update is called once per frame
@@ -24,6 +29,16 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        //ToDo
+        StartCoroutine(RespawnCoroutine());
+    }
+
+    public IEnumerator RespawnCoroutine()
+    {
+        Player.Instance.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(2f);
+
+        Player.Instance.transform.position = respawnPosition;
+        Player.Instance.gameObject.SetActive(true);
     }
 }
