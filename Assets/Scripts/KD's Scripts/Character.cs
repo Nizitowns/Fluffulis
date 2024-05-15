@@ -34,13 +34,16 @@ public class Character : MonoBehaviour
     {
         Move();
     }
-
     private void Move()
     {
+        // direction and apply speed
         Vector3 direction = GetDirection();
         Vector3 velocity = (baseSpeed * direction + gravityVector) * 0.001f;
+        // move
         controller.Move(velocity);
+        // move character model
         model.position = transform.position;
+        // face in moving direction
         FaceDirection(direction);
     }
 
@@ -49,13 +52,13 @@ public class Character : MonoBehaviour
         if(Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) {  }
         else { currentTarget = direction; }
         model.LookAt(model.position + currentTarget);
-        //Debug.DrawLine(model.position, model.position + currentTarget * 5);
-
     }
     private Vector3 GetDirection()
     {
-        Vector3 camToChar = (cameraFocusPoint.position) - (cameraTransform.position); 
-        Vector3 yDirection = (new Vector3(camToChar.x, 0, camToChar.z)).normalized;
+        // get vector from camera to focus point
+        Vector3 camToPoint = (cameraFocusPoint.position) - (cameraTransform.position); 
+        // extract x and z values from vector
+        Vector3 yDirection = (new Vector3(camToPoint.x, 0, camToPoint.z)).normalized;
         Vector3 xDirection = (Quaternion.Euler(new Vector3(0,90,0)) * yDirection).normalized;
         Debug.DrawRay(cameraFocusPoint.position, yDirection * rawMove.y * 5, Color.cyan);
         Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
