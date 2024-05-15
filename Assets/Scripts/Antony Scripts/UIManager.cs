@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float fadeSpeed;
     public bool fadeToBlack, fadeFromBlack;
     public TMP_Text coinText;
+    public GameObject pauseScreen;
 
     private void Awake()
     {
@@ -38,5 +39,30 @@ public class UIManager : MonoBehaviour
                 fadeFromBlack = false;
             }
         }
+    }
+
+    public void Resume()
+    {
+        GameManager.Instance.PauseUnpause();
+    }
+
+    public void OpenOptions()
+    {
+
+    }
+
+    public void CloseOptions()
+    {
+
+    }
+
+    public void LevelSelect()
+    {
+
+    }
+
+    public void MainMenu()
+    {
+
     }
 }
