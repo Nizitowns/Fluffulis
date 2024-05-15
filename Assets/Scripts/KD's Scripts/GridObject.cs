@@ -46,45 +46,9 @@ public class GridObject : MonoBehaviour
         Sliding();
         Gravity();
     }
-
-    //void Gravity()
-    //{
-
-    //    // end gravity
-    //    Debug.DrawRay(transform.position, Vector3.down * 1f, Color.red);
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, Vector3.down, out hit))
-    //    {
-    //        if (!enableGravity && Vector3.Magnitude(transform.position - hit.point) > 1f)
-    //        {
-    //            gravityTarget = grid.WorldToCell(hit.point) + Vector3.up;
-    //            //gravityTarget = hit.point;
-    //            Debug.Log(name + "'s gravityTarget: " + gravityTarget);
-    //            enableGravity = true;
-    //            isPushable = false;
-    //            timeElapsed = 0f;
-    //            boxCollider.transform.position = gravityTarget;
-
-    //        }
-    //    }
-
-    //    if (enableGravity)
-    //    {
-    //        timeElapsed += Time.smoothDeltaTime;
-    //        timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
-    //        transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
-    //        //transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * pushSpeed);
-    //    }
-    //    if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
-    //    //if (transform.position == gravityTarget)
-    //    {
-    //        Debug.Log(name + " is in position!");
-    //        enableGravity = false;
-    //        isPushable = true;
-    //    }
-    //}
     public void StartGravity(Vector3 ground)
     {
+        Debug.Log("Start fall");
         if(!enableGravity) { return; }        
         gravityTarget = grid.WorldToCell(ground) + Vector3.up;
         gravityStarted = true;
@@ -94,7 +58,7 @@ public class GridObject : MonoBehaviour
     {
         if (enableGravity && gravityStarted)
         {
-            //Debug.Log("falling");
+            Debug.Log("falling");
             timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
             transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
