@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public int currentCoins;
 
+    [SerializeField] int levelEndMusic;
+
     private void Awake()
     {
         Instance = this;
@@ -78,5 +80,13 @@ public class GameManager : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public IEnumerator LevelEndCoroutine()
+    {
+        //AudioManager.Instance.PlayMusic(levelEndMusic);
+
+        yield return new WaitForSeconds(2f);
+
     }
 }
