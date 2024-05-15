@@ -7,7 +7,7 @@ public class FrameRate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 5;
+        Application.targetFrameRate = 60;
     }
 
 }
