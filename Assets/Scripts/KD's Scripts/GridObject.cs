@@ -94,7 +94,7 @@ public class GridObject : MonoBehaviour
     {
         if (enableGravity && gravityStarted)
         {
-            Debug.Log("falling");
+            //Debug.Log("falling");
             timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
             transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
@@ -102,7 +102,7 @@ public class GridObject : MonoBehaviour
             if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
             //if (transform.position == gravityTarget)
             {
-                Debug.Log(name + " is in position!");
+                //Debug.Log(name + " is in position!");
                 enableGravity = false;
                 gravityStarted = false;
                 isPushable = true;
@@ -112,7 +112,7 @@ public class GridObject : MonoBehaviour
     }
     public void Snap(Vector3 target)
     {
-        Debug.Log("Snap");
+        //Debug.Log("Snap");
         transform.position = grid.WorldToCell(target);
         boxCollider.transform.position = grid.WorldToCell(target);
         groundCheck.transform.position = transform.position + Vector3.down * 0.5f;
@@ -160,10 +160,10 @@ public class GridObject : MonoBehaviour
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
         transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed);
-        Debug.Log("sliding");
+        //Debug.Log("sliding");
         if (Vector3.Distance(transform.position, pushTarget) < 0.1f)
         {
-            Debug.Log("finish sliding");
+            //Debug.Log("finish sliding");
             finishedPush?.Invoke(); 
             Snap(pushTarget); 
             isPushable = true;
@@ -177,14 +177,14 @@ public class GridObject : MonoBehaviour
     //}
     private bool IsBlocked(Vector3 direction) 
     {
-        Debug.Log("is blocked");
+        //Debug.Log("is blocked");
         Debug.DrawRay(transform.position, direction * 1.2f, Color.red);
         if (Physics.Raycast(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide)) { return true; }
         return false;
     }
     private void CheckMatch() 
     { 
-        Debug.Log("Checking match"); 
+        //Debug.Log("Checking match"); 
     }
     private void OnEnable()
     {

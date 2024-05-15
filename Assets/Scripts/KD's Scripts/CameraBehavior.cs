@@ -13,6 +13,7 @@ public class CameraBehavior : MonoBehaviour
     public static BeginNegRotate beginNegRotate;
     public int rotationDirection { get; private set; }
 
+    [SerializeField] public float rotateAmount = 15;
     [SerializeField] public Transform cameraAxis;
     [SerializeField] public float rotateSpeed = 1f;
 
@@ -37,7 +38,7 @@ public class CameraBehavior : MonoBehaviour
         rotationDirection = (int) ctx.ReadValue<float>();
         timeElapsed = 0;
         vcamInput.enabled = false;
-        targetAngle = vcam.m_XAxis.Value + rotationDirection * 90;
+        targetAngle = vcam.m_XAxis.Value + rotationDirection * rotateAmount;
     }
     void RotateOverrideFreeLook() 
     {

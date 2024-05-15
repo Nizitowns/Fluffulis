@@ -12,7 +12,7 @@ public class InteractionHandler : MonoBehaviour
         //Debug.Log("collide with " + hit.gameObject.name);
         if (hit.gameObject.layer == interactableLayer)
         {
-            Debug.Log("collide with interactable" + hit.gameObject.name);
+            //Debug.Log("collide with interactable" + hit.gameObject.name);
             GridObject gridObj = hit.transform.parent.GetComponentInChildren<GridObject>();
             if(gridObj != null)
             {
