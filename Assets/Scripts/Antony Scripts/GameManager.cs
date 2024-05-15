@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     private Vector3 respawnPosition;
 
+    public int currentCoins;
+
     private void Awake()
     {
         Instance = this;
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         respawnPosition = Player.Instance.transform.position;
+
+        AddCoins(0);
     }
 
     // Update is called once per frame
@@ -36,9 +40,19 @@ public class GameManager : MonoBehaviour
     {
         Player.Instance.gameObject.SetActive(false);
 
+        UIManager.Instance.fadeToBlack = true;
+
         yield return new WaitForSeconds(2f);
+
+        UIManager.Instance.fadeFromBlack = true;
 
         Player.Instance.transform.position = respawnPosition;
         Player.Instance.gameObject.SetActive(true);
+    }
+
+    public void AddCoins(int coinsToAdd)
+    {
+        currentCoins += coinsToAdd;
+        UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 }
