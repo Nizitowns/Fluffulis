@@ -14,11 +14,13 @@ public class Character : MonoBehaviour
     [SerializeField] public float gravity = 9.81f;
 
     private Transform cameraTransform;
+    private Transform cameraFocusPoint;
     private Vector3 currentTarget;
     public Vector2 rawMove { get; private set; }
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        cameraFocusPoint = transform.parent.parent.Find("CameraFocusPoint");
         model = GameObject.Find("CharacterModel").transform;
        
     }
@@ -47,14 +49,16 @@ public class Character : MonoBehaviour
         if(Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) {  }
         else { currentTarget = direction; }
         model.LookAt(model.position + currentTarget);
-        Debug.DrawLine(model.position, model.position + currentTarget * 5);
+        //Debug.DrawLine(model.position, model.position + currentTarget * 5);
 
     }
     private Vector3 GetDirection()
     {
-        Vector3 camToChar = (transform.position) - (cameraTransform.position); 
+        Vector3 camToChar = (cameraFocusPoint.position) - (cameraTransform.position); 
         Vector3 yDirection = (new Vector3(camToChar.x, 0, camToChar.z)).normalized;
         Vector3 xDirection = (Quaternion.Euler(new Vector3(0,90,0)) * yDirection).normalized;
+        Debug.DrawRay(cameraFocusPoint.position, yDirection * rawMove.y * 5, Color.cyan);
+        Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
         return xDirection * rawMove.x + yDirection * rawMove.y;
     }
     private void OnEnable()
