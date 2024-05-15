@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseUnpause();
+            // PauseUnpause();
         }
     }
 
@@ -45,11 +45,11 @@ public class GameManager : MonoBehaviour
     {
         Character.Instance.gameObject.SetActive(false);
 
-        UIManager.Instance.fadeToBlack = true;
+        //UIManager.Instance.fadeToBlack = true;
 
         yield return new WaitForSeconds(2f);
 
-        UIManager.Instance.fadeFromBlack = true;
+        //UIManager.Instance.fadeFromBlack = true;
 
         Character.Instance.transform.position = respawnPosition;
         Character.Instance.gameObject.SetActive(true);
@@ -58,29 +58,29 @@ public class GameManager : MonoBehaviour
     public void AddCoins(int coinsToAdd)
     {
         currentCoins += coinsToAdd;
-        UIManager.Instance.coinText.text = currentCoins.ToString();
+        //UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 
-    public void PauseUnpause()
-    {
-        if (UIManager.Instance.pauseScreen.activeInHierarchy)
-        {
-            UIManager.Instance.pauseScreen.SetActive(false);
-            Time.timeScale = 1f;
+    //public void PauseUnpause()
+    //{
+    //    if (UIManager.Instance.pauseScreen.activeInHierarchy)
+    //    {
+    //        UIManager.Instance.pauseScreen.SetActive(false);
+    //        Time.timeScale = 1f;
 
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            UIManager.Instance.pauseScreen.SetActive(true);
-            UIManager.Instance.CloseOptions();
-            Time.timeScale = 0f;
+    //        Cursor.visible = false;
+    //        Cursor.lockState = CursorLockMode.Locked;
+    //    }
+    //    else
+    //    {
+    //        UIManager.Instance.pauseScreen.SetActive(true);
+    //        UIManager.Instance.CloseOptions();
+    //        Time.timeScale = 0f;
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
+    //        Cursor.visible = true;
+    //        Cursor.lockState = CursorLockMode.None;
+    //    }
+    //}
 
     public IEnumerator LevelEndCoroutine()
     {

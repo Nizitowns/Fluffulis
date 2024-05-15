@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 824498259957386611}
   m_Layer: 0
-  m_Name: GridObjects
+  m_Name: KDGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

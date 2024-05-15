@@ -3,19 +3,7 @@ using UnityEngine;
 public class CoinPickup : MonoBehaviour
 {
     [SerializeField] int value;
-    [SerializeField] GameObject pickupEffect;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    //[SerializeField] GameObject pickupEffect;
 
     private void OnTriggerEnter(Collider other)
     {
