@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx;
 
     [SerializeField] private int levelMusicToPlay;
+
+    public AudioMixerGroup musicMixer, sfxMixer;
 
     private int currentTrack;
 
@@ -47,5 +50,15 @@ public class AudioManager : MonoBehaviour
     public void PlaySFX(int sfxToPlay)
     {
         sfx[sfxToPlay].Play();
+    }
+
+    public void SetMusicLevel()
+    {
+        musicMixer.audioMixer.SetFloat("MusicVol", UIManager.Instance.musicVolSlider.value);
+    }
+
+    public void SetSFXLevel()
+    {
+        sfxMixer.audioMixer.SetFloat("SFXVol", UIManager.Instance.sfxVolSlider.value);
     }
 }

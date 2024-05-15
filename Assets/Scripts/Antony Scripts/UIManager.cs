@@ -10,7 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float fadeSpeed;
     public bool fadeToBlack, fadeFromBlack;
     public TMP_Text coinText;
-    public GameObject pauseScreen;
+    public GameObject pauseScreen, optionsScreen;
+    public Slider musicVolSlider, sfxVolSlider;
+
 
     private void Awake()
     {
@@ -48,12 +50,12 @@ public class UIManager : MonoBehaviour
 
     public void OpenOptions()
     {
-
+        optionsScreen.SetActive(true);
     }
 
     public void CloseOptions()
     {
-
+        optionsScreen.SetActive(false);
     }
 
     public void LevelSelect()
@@ -64,5 +66,15 @@ public class UIManager : MonoBehaviour
     public void MainMenu()
     {
 
+    }
+
+    public void SetMusicLevel()
+    {
+        AudioManager.Instance.SetMusicLevel();
+    }
+
+    public void SetSFXLevel()
+    {
+        AudioManager.Instance.SetSFXLevel();
     }
 }
