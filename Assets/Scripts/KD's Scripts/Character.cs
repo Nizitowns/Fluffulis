@@ -38,9 +38,9 @@ public class Character : MonoBehaviour
     {
         // direction and apply speed
         Vector3 direction = GetDirection();
-        Vector3 velocity = (baseSpeed * direction + gravityVector) * 0.001f;
+        Vector3 velocity = (baseSpeed * direction + gravityVector);
         // move
-        controller.Move(velocity);
+        controller.Move(velocity * Time.deltaTime);
         // move character model
         model.position = transform.position;
         // face in moving direction

@@ -91,6 +91,7 @@ public class GridObject : MonoBehaviour
             {
                 Push(-dir);
                 pushing = true;
+                isPushable = false;
                 break;
             }
         }
@@ -119,7 +120,12 @@ public class GridObject : MonoBehaviour
         if(!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
         transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed * pushSpeed);
-        if(transform.position == pushTarget) { finishedPush?.Invoke(); Snap(); }
+        if(transform.position == pushTarget) 
+        { 
+            finishedPush?.Invoke(); 
+            Snap(); 
+            isPushable = true;
+        }
     }
     IEnumerator DelayNewPush() 
     {
