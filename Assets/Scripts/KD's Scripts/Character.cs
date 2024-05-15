@@ -14,12 +14,13 @@ public class Character : MonoBehaviour
     [SerializeField] public float gravity = 9.81f;
 
     private Transform cameraTransform;
-    private Vector3 currentLook;
+    private Transform cameraFocusPoint;
     private Vector3 currentTarget;
     public Vector2 rawMove { get; private set; }
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        cameraFocusPoint = transform.parent.parent.Find("CameraFocusPoint");
         model = GameObject.Find("CharacterModel").transform;
        
     }
@@ -27,40 +28,41 @@ public class Character : MonoBehaviour
     {
         cameraTransform = Camera.main.transform;
         gravityVector = Vector3.down * gravity;
-        currentLook = transform.forward;
         currentTarget = model.forward;
     }    
     private void Update()
     {
         Move();
     }
-
     private void Move()
     {
+        // direction and apply speed
         Vector3 direction = GetDirection();
         Vector3 velocity = (baseSpeed * direction + gravityVector) * 0.001f;
+        // move
         controller.Move(velocity);
+        // move character model
         model.position = transform.position;
+        // face in moving direction
         FaceDirection(direction);
     }
 
     private void FaceDirection(Vector3 direction)
     {
-        if(direction.x == 0 && direction.z == 0) {  }
+        if(Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) {  }
         else { currentTarget = direction; }
-        //float angle = Vector3.Angle(currentLook, currentTarget);
-        ////Debug.Log("angle: " + angle);
-        //currentLook = Vector3.Lerp(currentLook, currentTarget, Time.deltaTime);
-        //model.LookAt(model.position + currentLook);
         model.LookAt(model.position + currentTarget);
-        //model.LookAt(Vector3.Lerp(model.localRotation * model.forward + transform.position, target, Time.deltaTime));
-        Debug.DrawRay(model.position, currentLook * 10f, Color.red);
-        Debug.DrawRay(model.position, currentTarget * 5f, Color.blue);
     }
     private Vector3 GetDirection()
     {
-
-        return cameraTransform.right * rawMove.x + cameraTransform.forward * rawMove.y;
+        // get vector from camera to focus point
+        Vector3 camToPoint = (cameraFocusPoint.position) - (cameraTransform.position); 
+        // extract x and z values from vector
+        Vector3 yDirection = (new Vector3(camToPoint.x, 0, camToPoint.z)).normalized;
+        Vector3 xDirection = (Quaternion.Euler(new Vector3(0,90,0)) * yDirection).normalized;
+        Debug.DrawRay(cameraFocusPoint.position, yDirection * rawMove.y * 5, Color.cyan);
+        Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
+        return xDirection * rawMove.x + yDirection * rawMove.y;
     }
     private void OnEnable()
     {

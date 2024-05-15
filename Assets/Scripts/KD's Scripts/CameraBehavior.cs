@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,61 +18,69 @@ public class CameraBehavior : MonoBehaviour
 
     private float timeElapsed = 0f;
     private float targetAngle;
+    private CinemachineFreeLook vcam;
+    private CinemachineInputProvider vcamInput;
+    private GameObject character;
 
-
-    
     private void Awake()
     {
+        character = GameObject.Find("Character");
+        vcam = GetComponent<CinemachineFreeLook>();
+        vcamInput = GetComponent<CinemachineInputProvider>();
         cameraAxis = transform.parent;
         transform.parent = cameraAxis.transform;
         rotationDirection = 0;
         targetAngle = cameraAxis.eulerAngles.y;
     }
-    void StartRotate(CallbackContext ctx) 
+    void StartRotateOverrideFreeLook(CallbackContext ctx)
     {
-        //Debug.Log("start rotate");
         rotationDirection = (int) ctx.ReadValue<float>();
-        Debug.Log("rotationDir=" + rotationDirection);
         timeElapsed = 0;
-        targetAngle += rotationDirection * 90;
-        if(rotationDirection < 0) { beginNegRotate?.Invoke(); }
-        else if(rotationDirection > 0) { beginPosRotate?.Invoke(); }
-        
+        vcamInput.enabled = false;
+        targetAngle = vcam.m_XAxis.Value + rotationDirection * 90;
     }
-    void Rotate()
+    void RotateOverrideFreeLook() 
     {
-        timeElapsed += Time.deltaTime;
-        cameraAxis.rotation = Quaternion.Lerp(
-            cameraAxis.rotation,
-            Quaternion.Euler(cameraAxis.eulerAngles.x, targetAngle, cameraAxis.eulerAngles.z),
-            timeElapsed * rotateSpeed
-            );
-
+        if(vcamInput.enabled == true) { return; }
+        timeElapsed += Time.smoothDeltaTime;
+        // Adjust target for wrapping around (btw 180, -180)
+        if(targetAngle > 180 && vcam.m_XAxis.Value < 0) 
+        { 
+            targetAngle = -180 + (targetAngle - 180); 
+        }
+        else if(targetAngle < -180 && vcam.m_XAxis.Value > 0) 
+        { 
+            targetAngle = 180 + (targetAngle + 180); 
+        }
+        // rotate to target
+        vcam.m_XAxis.Value = Mathf.Lerp(vcam.m_XAxis.Value, targetAngle, timeElapsed * rotateSpeed);
+        // enable free camera look after rotation should be done
+        if(Mathf.Approximately(targetAngle, vcam.m_XAxis.Value)) { vcamInput.enabled = true; }
     }
     private void Update()
     {
-        Rotate();
+        RotateOverrideFreeLook();
     }
 
     private void OnEnable()
     {
-        if(GameObject.Find("Character").TryGetComponent(out PlayerInput input))
+        if(character.TryGetComponent(out PlayerInput input))
         {
             InputAction cameraRotation = input.actions["CameraRotate"];
             if(cameraRotation != null) 
             {
-                cameraRotation.performed += ctx => StartRotate(ctx);
+                cameraRotation.performed += ctx => StartRotateOverrideFreeLook(ctx);
             }
         }
     }
     private void OnDisable()
     {
-        if (GameObject.Find("Character").TryGetComponent(out PlayerInput input))
+        if (character.TryGetComponent(out PlayerInput input))
         {
             InputAction cameraRotation = input.actions["CameraRotate"];
             if (cameraRotation != null)
             {
-                cameraRotation.performed -= ctx => StartRotate(ctx);
+                cameraRotation.performed -= ctx => StartRotateOverrideFreeLook(ctx);
             }
         }
     }
