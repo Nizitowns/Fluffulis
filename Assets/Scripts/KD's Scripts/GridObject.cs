@@ -20,20 +20,26 @@ public class GridObject : MonoBehaviour
     public delegate void FinishedPush();
     public FinishedPush finishedPush;
 
-    bool enableGravity = false;
+    float duration = 1;
+    float currentLerpTime = 0;
+
+    public bool enableGravity = false;
     bool grounded = true;
     float gravity = 1f;
     Vector3 gravityTarget;
+    bool gravityStarted = false;
 
     BoxCollider boxCollider;
+    SphereCollider groundCheck;
     private void Awake()
     {
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
         boxCollider = transform.parent.GetComponentInChildren<BoxCollider>();
+        groundCheck = transform.parent.GetComponentInChildren<SphereCollider>();
     }
     void Start()
     {
-        if(snapToGridOnStart) { Snap(); }
+        if(snapToGridOnStart) { Snap(transform.position); }
     }
     private void Update()
     {
@@ -41,44 +47,76 @@ public class GridObject : MonoBehaviour
         Gravity();
     }
 
-    void Gravity()
-    {
+    //void Gravity()
+    //{
 
-        // end gravity
-        Debug.DrawRay(transform.position, Vector3.down * 1f, Color.red);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+    //    // end gravity
+    //    Debug.DrawRay(transform.position, Vector3.down * 1f, Color.red);
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(transform.position, Vector3.down, out hit))
+    //    {
+    //        if (!enableGravity && Vector3.Magnitude(transform.position - hit.point) > 1f)
+    //        {
+    //            gravityTarget = grid.WorldToCell(hit.point) + Vector3.up;
+    //            //gravityTarget = hit.point;
+    //            Debug.Log(name + "'s gravityTarget: " + gravityTarget);
+    //            enableGravity = true;
+    //            isPushable = false;
+    //            timeElapsed = 0f;
+    //            boxCollider.transform.position = gravityTarget;
+
+    //        }
+    //    }
+
+    //    if (enableGravity)
+    //    {
+    //        timeElapsed += Time.smoothDeltaTime;
+    //        timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
+    //        transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
+    //        //transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * pushSpeed);
+    //    }
+    //    if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
+    //    //if (transform.position == gravityTarget)
+    //    {
+    //        Debug.Log(name + " is in position!");
+    //        enableGravity = false;
+    //        isPushable = true;
+    //    }
+    //}
+    public void StartGravity(Vector3 ground)
+    {
+        if(!enableGravity) { return; }        
+        gravityTarget = grid.WorldToCell(ground) + Vector3.up;
+        gravityStarted = true;
+        isPushable = false;
+    }
+    public void Gravity()
+    {
+        if (enableGravity && gravityStarted)
         {
-            if (!enableGravity && Vector3.Magnitude(transform.position - hit.point) > 1f)
+            Debug.Log("falling");
+            timeElapsed += Time.smoothDeltaTime;
+            timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
+            transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
+            //transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * pushSpeed);
+            if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
+            //if (transform.position == gravityTarget)
             {
-                gravityTarget = grid.WorldToCell(hit.point) + Vector3.up;
-                //gravityTarget = hit.point;
-                Debug.Log(name + "'s gravityTarget: " + gravityTarget);
-                enableGravity = true;
-                isPushable = false;
-                timeElapsed = 0f;
-                boxCollider.transform.position = gravityTarget;
-                
+                Debug.Log(name + " is in position!");
+                enableGravity = false;
+                gravityStarted = false;
+                isPushable = true;
+                Snap(gravityTarget);
             }
         }
-
-        if (enableGravity) 
-        {
-            timeElapsed += Time.deltaTime;
-            transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * pushSpeed);
-        }
-        if(transform.position == gravityTarget) 
-        {
-            Debug.Log("in position!");
-            enableGravity = false;
-            isPushable = true;
-        }
     }
-    public void Snap()
+    public void Snap(Vector3 target)
     {
-        //Debug.Log("Snap");
-        transform.position = grid.WorldToCell(transform.position);
-        boxCollider.transform.position = transform.position;
+        Debug.Log("Snap");
+        transform.position = grid.WorldToCell(target);
+        boxCollider.transform.position = grid.WorldToCell(target);
+        groundCheck.transform.position = transform.position + Vector3.down * 0.5f;
+        //groundCheck.transform.position = grid.WorldToCell(target);
     }
     public void CheckPush() 
     {
@@ -113,25 +151,30 @@ public class GridObject : MonoBehaviour
         pushTarget = newCellPosition;
         timeElapsed = 0;
         startedPush?.Invoke();
-        StartCoroutine(DelayNewPush());
+        //StartCoroutine(DelayNewPush());
     }
     private void Sliding() 
     {
+        //Debug.Log("sliding but pushing");
         if(!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
-        transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed * pushSpeed);
-        if(transform.position == pushTarget) 
-        { 
+        timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
+        transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed);
+        Debug.Log("sliding");
+        if (Vector3.Distance(transform.position, pushTarget) < 0.1f)
+        {
+            Debug.Log("finish sliding");
             finishedPush?.Invoke(); 
-            Snap(); 
+            Snap(pushTarget); 
             isPushable = true;
+            pushing = false;
         }
     }
-    IEnumerator DelayNewPush() 
-    {
-        yield return new WaitForSeconds(0.3f);
-        pushing = false;
-    }
+    //IEnumerator DelayNewPush() 
+    //{
+    //    yield return new WaitForSeconds(0.3f);
+    //    pushing = false;
+    //}
     private bool IsBlocked(Vector3 direction) 
     {
         Debug.Log("is blocked");
