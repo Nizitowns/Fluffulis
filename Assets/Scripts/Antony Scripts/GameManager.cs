@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        respawnPosition = Player.Instance.transform.position;
+        respawnPosition = Character.Instance.transform.position;
 
         AddCoins(0);
     }
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RespawnCoroutine()
     {
-        Player.Instance.gameObject.SetActive(false);
+        Character.Instance.gameObject.SetActive(false);
 
         UIManager.Instance.fadeToBlack = true;
 
@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.fadeFromBlack = true;
 
-        Player.Instance.transform.position = respawnPosition;
-        Player.Instance.gameObject.SetActive(true);
+        Character.Instance.transform.position = respawnPosition;
+        Character.Instance.gameObject.SetActive(true);
     }
 
     public void AddCoins(int coinsToAdd)
