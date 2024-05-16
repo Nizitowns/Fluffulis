@@ -66,7 +66,7 @@ public class GridObject : MonoBehaviour
             if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
             //if (transform.position == gravityTarget)
             {
-                //Debug.Log(name + " is in position!");
+                Debug.Log(name + " is in position!");
                 enableGravity = false;
                 gravityStarted = false;
                 isPushable = true;
