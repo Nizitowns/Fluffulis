@@ -2860,6 +2860,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Killzone
       objectReference: {fileID: 0}
+    - target: {fileID: 4352724671006087749, guid: 8205ccba1052e9740a1416f15be7ac18,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6166463836550600509, guid: 8205ccba1052e9740a1416f15be7ac18,
         type: 3}
       propertyPath: m_LocalPosition.x
