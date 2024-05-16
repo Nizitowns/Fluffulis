@@ -7,8 +7,8 @@ public class GridObject : MonoBehaviour
     // Start is called before the first frame update
     Grid grid;
     [SerializeField] LayerMask BlockLayers = ~0;
-    [SerializeField] LayerMask Interactable = 1 << 6;
-    [SerializeField] LayerMask Ground = 1 << 3;
+    //[SerializeField] LayerMask Interactable = 1 << 6;
+    //[SerializeField] LayerMask Ground = 1 << 3;
     [SerializeField] public bool snapToGridOnStart = true;
     [SerializeField] public bool isPushable = true;
     private bool pushing = false;
@@ -21,11 +21,11 @@ public class GridObject : MonoBehaviour
     public FinishedPush finishedPush;
 
     float duration = 1;
-    float currentLerpTime = 0;
+    //float currentLerpTime = 0;
 
     public bool enableGravity = false;
-    bool grounded = true;
-    float gravity = 1f;
+    //bool grounded = true;
+    public float gravity = 1f;
     Vector3 gravityTarget;
     bool gravityStarted = false;
 
@@ -48,7 +48,7 @@ public class GridObject : MonoBehaviour
     }
     public void StartGravity(Vector3 ground)
     {
-        Debug.Log("Start fall");
+        //Debug.Log("Start fall");
         if(!enableGravity) { return; }        
         gravityTarget = grid.WorldToCell(ground) + Vector3.up;
         gravityStarted = true;
@@ -58,10 +58,10 @@ public class GridObject : MonoBehaviour
     {
         if (enableGravity && gravityStarted)
         {
-            Debug.Log("falling");
+            //Debug.Log("falling");
             timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
-            transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed);
+            transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * gravity);
             //transform.position = Vector3.Lerp(transform.position, gravityTarget, timeElapsed * pushSpeed);
             if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
             //if (transform.position == gravityTarget)
@@ -123,7 +123,7 @@ public class GridObject : MonoBehaviour
         if(!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
-        transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed);
+        transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed * pushSpeed);
         //Debug.Log("sliding");
         if (Vector3.Distance(transform.position, pushTarget) < 0.1f)
         {

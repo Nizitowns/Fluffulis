@@ -5,29 +5,46 @@ using UnityEngine;
 public class HandleGravity : MonoBehaviour
 {
     GridObject gridObject;
-    [SerializeField] LayerMask Interactable = 1 << 6;
-    [SerializeField] LayerMask Ground = 1 << 3;
+    //[SerializeField] LayerMask Interactable = 1 << 6;
+    //[SerializeField] LayerMask Ground = 1 << 3;
     private void Start()
     {
         gridObject = transform.parent.GetComponentInChildren<GridObject>();
+        HandleStartFall();
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.gameObject.name + " was exited from " + transform.parent.name);
-        //if (other.gameObject.layer == Interactable)
-        if((Interactable & (1 << other.gameObject.layer)) != 0)
+        //Debug.Log(other.gameObject.name + " was exited from " + transform.parent.name);
+        HandleFall();
+    }
+
+    public void HandleFall()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            //Debug.Log("exiter is Interactable");
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            //Debug.Log(transform.parent.name + "'s raycast hit below");
+            if (Vector3.Magnitude(transform.position - hit.point) > .9f)
             {
-                //Debug.Log("raycast hit below");
-                if (Vector3.Magnitude(transform.position - hit.point) > 0.6f)
-                {
-                    //Debug.Log("distance between hit and position > 1");
-                    gridObject.enableGravity = true;
-                    gridObject.StartGravity(hit.point);
-                }
+                //Debug.Log(transform.parent.name + "'s distance between hit: " + Vector3.Distance(transform.position, hit.point));
+                gridObject.enableGravity = true;
+                gridObject.gravity = 1 / Vector3.Magnitude(transform.position - hit.point);
+                gridObject.StartGravity(hit.point);
+            }
+        }
+    }
+    public void HandleStartFall()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+            //Debug.Log(transform.parent.name + "'s raycast hit below");
+            if (Vector3.Magnitude(transform.position - hit.point) > 2)
+            {
+                //Debug.Log(transform.parent.name + "'s distance between hit: " + Vector3.Distance(transform.position, hit.point));
+                gridObject.enableGravity = true;
+                gridObject.gravity = 1 / Vector3.Magnitude(transform.position - hit.point);
+                gridObject.StartGravity(hit.point);
             }
         }
     }

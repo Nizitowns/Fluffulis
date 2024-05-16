@@ -9,7 +9,7 @@ public class Button : MonoBehaviour
     {
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
-            //Debug.Log("Interactable triggers button");
+            //Debug.Log(other.name + "has hit button");
             ButtonManager.buttonActivated?.Invoke();
         }
     }
