@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
         //AudioManager.Instance.PlayMusic(levelEndMusic);
 
         yield return new WaitForSeconds(2f);
+        Debug.Log("load next scene in build settings");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
 }

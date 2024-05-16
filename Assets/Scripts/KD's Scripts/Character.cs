@@ -65,6 +65,10 @@ public class Character : MonoBehaviour
         Debug.DrawRay(cameraFocusPoint.position, yDirection * rawMove.y * 5, Color.cyan);
         Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
         return xDirection * rawMove.x + yDirection * rawMove.y;
+    }    
+    private void SetMove(CallbackContext ctx)
+    {
+        rawMove = ctx.ReadValue<Vector2>();
     }
     private void OnEnable()
     {
@@ -73,25 +77,23 @@ public class Character : MonoBehaviour
             InputAction moveAction = playerInput.actions["Move"];
             if (moveAction != null)
             {
-                moveAction.performed += ctx => SetMove(ctx);
-                moveAction.canceled += ctx => SetMove(ctx);
+                moveAction.performed += SetMove;
+                moveAction.canceled += SetMove;
             }
         }
     }
     private void OnDisable()
     {
+        rawMove = Vector2.zero;
         if (TryGetComponent(out PlayerInput playerInput))
         {
             InputAction moveAction = playerInput.actions["Move"];
             if (moveAction != null)
             {
-                moveAction.performed -= ctx => SetMove(ctx);
-                moveAction.canceled -= ctx => SetMove(ctx);
+                moveAction.performed -= SetMove;
+                moveAction.canceled -= SetMove;
             }
         }
     }
-    private void SetMove(CallbackContext ctx)
-    {
-        rawMove = ctx.ReadValue<Vector2>();
-    }
+
 }

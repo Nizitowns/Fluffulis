@@ -35,10 +35,13 @@ public class CameraBehavior : MonoBehaviour
     }
     void StartRotateOverrideFreeLook(CallbackContext ctx)
     {
+        //Debug.Log("startoverridefreelook is called");
+        //if (vcamInput == null) { return; }
         rotationDirection = (int) ctx.ReadValue<float>();
         timeElapsed = 0;
         vcamInput.enabled = false;
         targetAngle = vcam.m_XAxis.Value + rotationDirection * rotateAmount;
+        
     }
     void RotateOverrideFreeLook() 
     {
@@ -70,7 +73,8 @@ public class CameraBehavior : MonoBehaviour
             InputAction cameraRotation = input.actions["CameraRotate"];
             if(cameraRotation != null) 
             {
-                cameraRotation.performed += ctx => StartRotateOverrideFreeLook(ctx);
+                cameraRotation.performed += StartRotateOverrideFreeLook;
+                //cameraRotation.performed -= StartRotateOverrideFreeLook;
             }
         }
     }
@@ -81,7 +85,8 @@ public class CameraBehavior : MonoBehaviour
             InputAction cameraRotation = input.actions["CameraRotate"];
             if (cameraRotation != null)
             {
-                cameraRotation.performed -= ctx => StartRotateOverrideFreeLook(ctx);
+                Debug.Log("disable startrotateoverridefreelook");
+                cameraRotation.performed -= StartRotateOverrideFreeLook;
             }
         }
     }
