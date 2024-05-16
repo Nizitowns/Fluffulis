@@ -28,6 +28,7 @@ public class ButtonManager : MonoBehaviour
     public void HandleButtonPress()
     {
         numButtonsActivated++;
+        Debug.Log(numButtonsActivated);
         if (numButtonsActivated >= buttons.Length) 
         { 
             UnlockNextLevel(); 
