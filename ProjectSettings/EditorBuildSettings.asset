@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Playgrounds/Antonys Level Select.unity
     guid: e8c33e6164a3627439f08a2465e3bab9
   - enabled: 1
-    path: Assets/Scenes/Playgrounds/Antonys Playground.unity
-    guid: 06bc951f9d881d0458746f064b98108d
-  - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
     guid: d613c2957a12ea947be54eb51dfb63c9
   - enabled: 1

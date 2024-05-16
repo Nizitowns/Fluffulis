@@ -1890,7 +1890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b8c05458862d44a80f70a602cf5a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstLevel: Antonys Playground
+  firstLevel: Level1
   levelSelect: Antonys Level Select
 --- !u!1001 &5592671759693519687
 PrefabInstance:
