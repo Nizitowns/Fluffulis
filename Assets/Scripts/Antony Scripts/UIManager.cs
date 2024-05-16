@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text coinText;
     public GameObject pauseScreen, optionsScreen;
     public Slider musicVolSlider, sfxVolSlider;
+    [SerializeField] string levelSelect, mainMenu;
 
 
     private void Awake()
@@ -60,12 +62,12 @@ public class UIManager : MonoBehaviour
 
     public void LevelSelect()
     {
-
+        SceneManager.LoadScene(levelSelect);
     }
 
     public void MainMenu()
     {
-
+        SceneManager.LoadScene(mainMenu);
     }
 
     public void SetMusicLevel()
