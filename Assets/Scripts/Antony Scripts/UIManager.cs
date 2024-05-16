@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject pauseScreen, optionsScreen;
     public Slider musicVolSlider, sfxVolSlider;
     [SerializeField] string levelSelect, mainMenu;
-
+ 
 
     private void Awake()
     {
@@ -25,7 +25,9 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         if (fadeToBlack)
+           
         {
+           
             blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, Mathf.MoveTowards(blackScreen.color.a, 1f, fadeSpeed * Time.deltaTime));
 
             if (blackScreen.color.a == 1f)
@@ -36,10 +38,12 @@ public class UIManager : MonoBehaviour
 
         if (fadeFromBlack)
         {
+            
             blackScreen.color = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, Mathf.MoveTowards(blackScreen.color.a, 0f, fadeSpeed * Time.deltaTime));
-
+        
             if (blackScreen.color.a == 0f)
             {
+              
                 fadeFromBlack = false;
             }
         }
@@ -57,6 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseOptions()
     {
+     
         optionsScreen.SetActive(false);
     }
 
@@ -67,7 +72,9 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenu);
+       
     }
 
     public void SetMusicLevel()
