@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
     {
         Instance = this;
         controller = GetComponent<CharacterController>();
-        cameraFocusPoint = transform.parent.parent.Find("CameraFocusPoint");
+        cameraFocusPoint = GameObject.Find("CameraFocusPoint").transform;
         model = GameObject.Find("CharacterModel").transform;
 
     }
