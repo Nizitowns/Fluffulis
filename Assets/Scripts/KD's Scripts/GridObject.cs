@@ -134,11 +134,6 @@ public class GridObject : MonoBehaviour
             pushing = false;
         }
     }
-    //IEnumerator DelayNewPush() 
-    //{
-    //    yield return new WaitForSeconds(0.3f);
-    //    pushing = false;
-    //}
     private bool IsBlocked(Vector3 direction) 
     {
         //Debug.Log("is blocked");
