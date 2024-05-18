@@ -9,7 +9,8 @@ public class Character : MonoBehaviour
 
     CharacterController controller;
     Transform model;
-    Vector3 gravityVector;
+    public Vector3 gravityVector;
+    public Vector3 yVelocity;
     [SerializeField] Transform cameraAxis;
     [SerializeField] public float baseSpeed = 10f;
     [SerializeField] public float gravity = 9.81f;
@@ -18,29 +19,43 @@ public class Character : MonoBehaviour
     private Transform cameraFocusPoint;
     private Vector3 currentTarget;
     public Vector2 rawMove { get; private set; }
+
+    /// <summary>
+    /// Jump Variables
+    /// </summary>
+    public float jumpHeight = 1.2f;
+    public float jumpSpeed = 1f;
+    public float jumpDuration = 1f;
+    bool startedJump = false;
+    private float startJumpY;
+    private float timeElapsed;
+    private GroundCheck groundCheck;
+    public bool enableJump = true;
     private void Awake()
     {
         Instance = this;
         controller = GetComponent<CharacterController>();
         cameraFocusPoint = GameObject.Find("CameraFocusPoint").transform;
         model = GameObject.Find("CharacterModel").transform;
-
+        groundCheck = GetComponentInChildren<GroundCheck>();
     }
     private void Start()
     {
         cameraTransform = Camera.main.transform;
         gravityVector = Vector3.down * gravity;
         currentTarget = model.forward;
+        yVelocity = gravityVector;
     }
     private void Update()
     {
+        Jumping();
         Move();
     }
     private void Move()
     {
         // direction and apply speed
         Vector3 direction = GetDirection();
-        Vector3 velocity = (baseSpeed * direction + gravityVector);
+        Vector3 velocity = (baseSpeed * direction + yVelocity);
         // move
         controller.Move(velocity * Time.deltaTime);
         // move character model
@@ -49,6 +64,34 @@ public class Character : MonoBehaviour
         FaceDirection(direction);
     }
 
+    private void StartJump(CallbackContext ctx) 
+    {
+        if(!enableJump) { return; }
+        if(!groundCheck.Grounded() || startedJump) { return; }
+        startedJump = true;
+        startJumpY = transform.position.y;
+        timeElapsed = 0;
+    }
+    private void Jumping()
+    {
+        if(!enableJump) { return; }
+        if(!startedJump) { return; }
+        timeElapsed += Time.smoothDeltaTime;
+        timeElapsed = Mathf.MoveTowards(timeElapsed, jumpDuration, Time.smoothDeltaTime);
+        //currJumpY = Mathf.Lerp(currJumpY, startJumpY + jumpHeight, timeElapsed * jumpSpeed);
+        yVelocity = Vector3.up * jumpSpeed;
+        if(transform.position.y >= startJumpY + jumpHeight) 
+        {
+            if(timeElapsed < jumpDuration) { yVelocity = Vector3.zero; }
+            else
+            {
+                Debug.Log("timeElapsed: " + timeElapsed);
+                yVelocity = gravityVector;
+                startedJump = false; 
+            }
+
+        }
+    }
     private void FaceDirection(Vector3 direction)
     {
         if (Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) { }
@@ -80,6 +123,11 @@ public class Character : MonoBehaviour
                 moveAction.performed += SetMove;
                 moveAction.canceled += SetMove;
             }
+            InputAction jumpAction = playerInput.actions["Jump"];
+            if(jumpAction != null)
+            {
+                jumpAction.started += StartJump;
+            }
         }
     }
     private void OnDisable()
@@ -92,6 +140,11 @@ public class Character : MonoBehaviour
             {
                 moveAction.performed -= SetMove;
                 moveAction.canceled -= SetMove;
+            }
+            InputAction jumpAction = playerInput.actions["Jump"];
+            if (jumpAction != null)
+            {
+                jumpAction.canceled -= StartJump;
             }
         }
     }
