@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         Debug.Log("load next scene in build settings");
+
+        PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_unlocked", 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }

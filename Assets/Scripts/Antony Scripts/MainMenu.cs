@@ -5,10 +5,15 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private string firstLevel, levelSelect;
 
+    [SerializeField] private GameObject continueButton;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        if (PlayerPrefs.HasKey("Continue"))
+        {
+            continueButton.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -20,6 +25,8 @@ public class MainMenu : MonoBehaviour
     public void NewGame()
     {
         SceneManager.LoadScene(firstLevel);
+
+        PlayerPrefs.SetInt("Continue", 0);
     }
 
     public void Continue()
