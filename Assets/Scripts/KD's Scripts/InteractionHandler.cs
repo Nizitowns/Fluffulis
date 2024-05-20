@@ -18,7 +18,13 @@ public class InteractionHandler : MonoBehaviour
             {
                 gridObj.CheckPush();
             }
-            
+            UnitBlock uBlock = hit.transform.parent.GetComponentInChildren<UnitBlock>();
+            if (uBlock != null)
+            {
+                uBlock.Push();
+                //Debug.Log("uBlock push");
+            }
+
         }
     }
 }

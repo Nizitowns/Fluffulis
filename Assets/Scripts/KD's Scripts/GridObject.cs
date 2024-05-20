@@ -46,14 +46,23 @@ public class GridObject : MonoBehaviour
         Sliding();
         Gravity();
     }
+    /// <summary>
+    /// Sets up variables for gravity to act on object, only if enabledGravity is true.
+    /// </summary>
+    /// <param name="ground"></param>
     public void StartGravity(Vector3 ground)
     {
         //Debug.Log("Start fall");
         if(!enableGravity) { return; }        
         gravityTarget = grid.WorldToCell(ground) + Vector3.up;
+        //Debug.Log(transform.parent.name + "'s gravityTarget: " + gravityTarget);
         gravityStarted = true;
         isPushable = false;
     }
+    /// <summary>
+    /// If gravity is enabled and started, start moving downward towards gravityTarget.
+    /// Once close enough to gravityTarget, snap the object to grid.
+    /// </summary>
     public void Gravity()
     {
         if (enableGravity && gravityStarted)
@@ -66,7 +75,7 @@ public class GridObject : MonoBehaviour
             if (Vector3.Distance(transform.position, gravityTarget) < 0.1f)
             //if (transform.position == gravityTarget)
             {
-                Debug.Log(name + " is in position!");
+                //Debug.Log(name + " is in position!");
                 enableGravity = false;
                 gravityStarted = false;
                 isPushable = true;
@@ -74,6 +83,10 @@ public class GridObject : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// snaps grid object to nearest grid point
+    /// </summary>
+    /// <param name="target">position in space to convert to grid point</param>
     public void Snap(Vector3 target)
     {
         //Debug.Log("Snap");
@@ -82,6 +95,12 @@ public class GridObject : MonoBehaviour
         groundCheck.transform.position = transform.position + Vector3.down * 0.5f;
         //groundCheck.transform.position = grid.WorldToCell(target);
     }
+    /// <summary>
+    /// Called by the player's InteractionHandler OnControllerColliderHit.
+    /// If not pushable, or is currently pushing, do nothing.
+    /// Otherwise, checks which direction the object was pushed from, and whether there is space in the opposite direction.
+    /// If there is space to push the object, set up variables for pushing it.
+    /// </summary>
     public void CheckPush() 
     {
         if(!isPushable) { return; }
@@ -98,6 +117,12 @@ public class GridObject : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Sends a raycast to detect player. If the raycast hits the Player, and the opposite of direction is not Blocked, return true.
+    /// Else, return false.
+    /// </summary>
+    /// <param name="direction">Direction of raycast that detects player.</param>
+    /// <returns> Returns whether direction is the push direction, and can be pushed from that direction. </returns>
     private bool IsPushDirection(Vector3 direction)
     {
         RaycastHit hit;
@@ -109,6 +134,10 @@ public class GridObject : MonoBehaviour
         }
         return false;
     }
+    /// <summary>
+    /// Sets up variables to push in direction, one grid unit.
+    /// </summary>
+    /// <param name="direction">The direction to push to.</param>
     private void Push(Vector3 direction) 
     {
         Vector3 newCellPosition = grid.WorldToCell(transform.position + direction);
@@ -117,6 +146,10 @@ public class GridObject : MonoBehaviour
         startedPush?.Invoke();
         //StartCoroutine(DelayNewPush());
     }
+    /// <summary>
+    /// Slides the object towards pushTarget.
+    /// When distance between pushTarget and transform is marginal, Finish pushing/sliding, and Snap to ensure object is on grid.
+    /// </summary>
     private void Sliding() 
     {
         //Debug.Log("sliding but pushing");
@@ -134,6 +167,12 @@ public class GridObject : MonoBehaviour
             pushing = false;
         }
     }
+    /// <summary>
+    /// Fires a raycast in direction, at a specific length. If there's a hit, then that direction is blocked. 
+    /// Otherwise, it is not blocked.
+    /// </summary>
+    /// <param name="direction"> direction to fire raycast </param>
+    /// <returns> true if blocked, false if not blocked </returns>
     private bool IsBlocked(Vector3 direction) 
     {
         //Debug.Log("is blocked");

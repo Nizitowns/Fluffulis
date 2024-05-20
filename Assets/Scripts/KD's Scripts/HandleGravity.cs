@@ -11,25 +11,21 @@ public class HandleGravity : MonoBehaviour
     private void Start()
     {
         gridObject = transform.parent.GetComponentInChildren<GridObject>();
-        HandleStartFall();
+        HandleFall();
         
     }
     private void OnTriggerExit(Collider other)
     {
-        //Debug.Log(other.gameObject.name + " was exited from " + gridObject.transform.parent.name);
-        //if (((Interactable & (1 << other.gameObject.layer)) != 0) || ((Ground & (1 << other.gameObject.layer)) != 0))
-        //{
-           
-        //}
          HandleFall();
-       
     }
 
     private void Update()
     {
         Debug.DrawRay(gridObject.transform.position, Vector3.down, Color.green);
     }
-
+    /// <summary>
+    /// Sends a raycast, checks the distance from object to ground
+    /// </summary>
     public void HandleFall()
     {
         RaycastHit hit;
@@ -37,37 +33,23 @@ public class HandleGravity : MonoBehaviour
         {
             //Debug.Log(gridObject.transform.parent.name + "'s raycast hit below");
             //Debug.Log(gridObject.transform.parent.name + "'s distance between hit: " + Vector3.Distance(gridObject.transform.position, hit.point));
-            if (Vector3.Magnitude(gridObject.transform.position - hit.point) > .2f)
-            {
+            //if (Vector3.Magnitude(gridObject.transform.position - hit.point) > .2f)
+            //{
                 FallTo(hit.point);
-            }
+            //}
         }
         else
         {
             FallTo(transform.position + Vector3.down * 200);
         }
     }
-    public void HandleStartFall()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(gridObject.transform.position, Vector3.down, out hit))
-        {
-            //Debug.Log(gridObject.transform.parent.name + "'s raycast hit below");
-            //Debug.Log(gridObject.transform.parent.name + "'s distance between hit: " + Vector3.Distance(gridObject.transform.position, hit.point));
-            if (Vector3.Magnitude(gridObject.transform.position - hit.point) > .2f)
-            {
-                FallTo(hit.point);
-            }
-            else
-            {
-                FallTo(transform.position + Vector3.down * 200);
-            }
-        }
-    }
-
+    /// <summary>
+    /// Object has gravity enabled
+    /// </summary>
+    /// <param name="point">point in space where object falls to</param>
     public void FallTo(Vector3 point)
     {
-        Debug.Log(gridObject.transform.parent.name + "'s distance between hit: " + Vector3.Distance(gridObject.transform.position, point));
+        //Debug.Log(gridObject.transform.parent.name + "'s distance between hit: " + Vector3.Distance(gridObject.transform.position, point));
         gridObject.enableGravity = true;
         if (Vector3.Magnitude(gridObject.transform.position - point) < 1) { gridObject.gravity = 1; }
         else { gridObject.gravity = 1 / Vector3.Magnitude(gridObject.transform.position - point); }
