@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BlockContainer : MonoBehaviour
 {
+    [Tooltip("Color/TypeID for comparison when checking correct button. 0 is default/any.")]
+    [SerializeField] public int typeID = 0;
     public Grid grid;
     List<UnitBlock> blocks;
     List<BoxCollider> blockColliders;
