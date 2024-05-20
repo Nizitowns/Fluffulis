@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 724992369}
+  m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0.0084599415, g: 0.06355195, b: 0.19811583, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -2378,7 +2378,7 @@ PrefabInstance:
     - target: {fileID: 6166463836550600509, guid: 8205ccba1052e9740a1416f15be7ac18,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 6166463836550600509, guid: 8205ccba1052e9740a1416f15be7ac18,
         type: 3}
@@ -3611,12 +3611,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a08cbf79f0765664caf939166bc0e698, type: 3}
---- !u!108 &724992369 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 1703933015259943900, guid: a08cbf79f0765664caf939166bc0e698,
-    type: 3}
-  m_PrefabInstance: {fileID: 724992368}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &740334355
 PrefabInstance:
   m_ObjectHideFlags: 0
