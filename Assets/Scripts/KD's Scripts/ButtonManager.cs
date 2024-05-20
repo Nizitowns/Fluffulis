@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
-    Button[] buttons;
+    [Tooltip("The set of buttons this component manages. If not set, all buttons must be activated to activate the trigger.")]
+    [SerializeField] Button[] buttons;
     public int numButtonsActivated = 0;
     public delegate void ButtonActivated();
-    public static ButtonActivated buttonActivated;
+    public ButtonActivated buttonActivated;
     public delegate void ButtonDeactivated();
-    public static ButtonDeactivated buttonDeactivated;
-    private void Awake()
+    public ButtonDeactivated buttonDeactivated;
+    [Tooltip("The trigger/condition that activates when all buttons are activated.")]
+    [SerializeField] ITrigger trigger;
+    
+    private void Start()
     {
-        buttons = FindObjectsOfType<Button>();
+        if(buttons.Length == 0) { buttons = FindObjectsOfType<Button>(); }
+        if(trigger == null) { GameObject.Find("Exit").TryGetComponent(out trigger); }
     }
     private void OnEnable()
     {
@@ -47,12 +52,12 @@ public class ButtonManager : MonoBehaviour
     public void UnlockNextLevel() 
     {
         //Debug.Log("Unlock next level!");
-        LevelExit.enableExit();
+        trigger.Activate();
     }
     public void LockNextLevel()
     {
         //Debug.Log("Level locked");
-        LevelExit.disableExit();
+        trigger.DeActivate();
     }
 
 }

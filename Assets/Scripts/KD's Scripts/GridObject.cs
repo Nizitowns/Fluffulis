@@ -184,12 +184,12 @@ public class GridObject : MonoBehaviour
     { 
         //Debug.Log("Checking match"); 
     }
-    private void OnEnable()
-    {
-        startedPush += () => Debug.Log(name + " was pushed");
-    }
-    private void OnDisable()
-    {
-        startedPush -= () => Debug.Log(name + " was pushed");
-    }
+    //private void OnEnable()
+    //{
+    //    startedPush += () => Debug.Log(name + " was pushed");
+    //}
+    //private void OnDisable()
+    //{
+    //    startedPush -= () => Debug.Log(name + " was pushed");
+    //}
 }

@@ -85,7 +85,7 @@ public class Character : MonoBehaviour
             if(timeElapsed < jumpDuration) { yVelocity = Vector3.zero; }
             else
             {
-                Debug.Log("timeElapsed: " + timeElapsed);
+                //Debug.Log("timeElapsed: " + timeElapsed);
                 yVelocity = gravityVector;
                 startedJump = false; 
             }
@@ -127,6 +127,7 @@ public class Character : MonoBehaviour
             if(jumpAction != null)
             {
                 jumpAction.started += StartJump;
+                jumpAction.canceled -= StartJump;
             }
         }
     }
@@ -144,6 +145,7 @@ public class Character : MonoBehaviour
             InputAction jumpAction = playerInput.actions["Jump"];
             if (jumpAction != null)
             {
+                jumpAction.started -= StartJump;
                 jumpAction.canceled -= StartJump;
             }
         }
