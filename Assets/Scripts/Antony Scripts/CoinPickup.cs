@@ -3,6 +3,7 @@ using UnityEngine;
 public class CoinPickup : MonoBehaviour
 {
     [SerializeField] int value;
+    [SerializeField] int soundToPlay;
     //[SerializeField] GameObject pickupEffect;
 
     private void OnTriggerEnter(Collider other)
@@ -13,6 +14,7 @@ public class CoinPickup : MonoBehaviour
             GameManager.Instance.AddCoins(value);
 
             Destroy(gameObject);
+            AudioManager.Instance.PlaySFX(soundToPlay);
         }
     }
 }
