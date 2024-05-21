@@ -7,8 +7,9 @@ public class BlockContainer : MonoBehaviour
 {
     [Tooltip("Color for comparison when checking correct button. ColorAny by default.")]
     [SerializeField] public BlockColor color;
+    [SerializeField] public bool enablePush = true;
     public Grid grid;
-    List<UnitBlock> blocks;
+    public List<UnitBlock> blocks { get; private set; }
     List<BoxCollider> blockColliders;
     List<MeshRenderer> meshRenderers;
     public delegate void StartPush();
@@ -25,7 +26,7 @@ public class BlockContainer : MonoBehaviour
     /// <summary>
     /// Push state
     /// </summary>
-    public bool isPushable = true;
+    private bool isPushable = true;
     private bool pushing = false;
     private float timeElapsed = 0f;
     private List<Vector3> pushTargets = new List<Vector3>();
@@ -139,6 +140,7 @@ public class BlockContainer : MonoBehaviour
     /// <param name="block">The original unit block that was pushed. </param>
     public void ReceivePush(UnitBlock block)
     {
+        if(!enablePush) { return; }
         //Debug.Log("Container ReceivePush");
         if(pushing) { return; }
         if(!isPushable) { return; }
@@ -153,6 +155,7 @@ public class BlockContainer : MonoBehaviour
     /// <param name="dir"> The direction to push in </param>
     public void PushBlockContainer(Vector3 dir)
     {
+        if (!enablePush) { return; }
         timeElapsed = 0f;
         pushing = true;
         isPushable = false;
@@ -164,6 +167,7 @@ public class BlockContainer : MonoBehaviour
     /// </summary>
     private void Sliding()
     {
+        if(!enablePush) { return; }
         //Debug.Log("sliding but pushing");
         if (!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
