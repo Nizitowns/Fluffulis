@@ -10,11 +10,8 @@ public class GameManager : MonoBehaviour
 
     public int currentCoins;
 
-<<<<<<< HEAD
     [SerializeField] GameObject deathEffect;
-=======
     private int levelCoins;
->>>>>>> Viresh-playground
 
     //[SerializeField] int levelEndMusic;
 
