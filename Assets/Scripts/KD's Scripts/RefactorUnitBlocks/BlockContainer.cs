@@ -25,7 +25,7 @@ public class BlockContainer : MonoBehaviour
     /// <summary>
     /// Push state
     /// </summary>
-    private bool isPushable = true;
+    public bool isPushable = true;
     private bool pushing = false;
     private float timeElapsed = 0f;
     private List<Vector3> pushTargets = new List<Vector3>();
