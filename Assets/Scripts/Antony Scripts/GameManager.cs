@@ -10,11 +10,24 @@ public class GameManager : MonoBehaviour
 
     public int currentCoins;
 
+    private int levelCoins;
+
     //[SerializeField] int levelEndMusic;
 
     private void Awake()
     {
-        Instance = this;
+        // Ensure there's only one instance of GameManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        levelCoins = currentCoins;
     }
 
     // Start is called before the first frame update
@@ -26,6 +39,7 @@ public class GameManager : MonoBehaviour
         respawnPosition = Character.Instance.transform.position;
 
         AddCoins(0);
+        UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 
     // Update is called once per frame
@@ -35,6 +49,11 @@ public class GameManager : MonoBehaviour
         {
             PauseUnpause();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadScene();
+        }
+        UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 
     public void Respawn()
@@ -85,6 +104,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator LevelEndCoroutine()
     {
+
+        levelCoins = currentCoins;
         //AudioManager.Instance.PlayMusic(levelEndMusic);
 
         yield return new WaitForSeconds(2f);
@@ -93,5 +114,27 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_unlocked", 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
+    }
+
+    public void ReloadScene()
+    {
+        StartCoroutine(Reload());
+    }
+    public IEnumerator Reload()
+    {
+        // Get the name of the current active scene
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Load the current scene by its name
+        SceneManager.LoadScene(currentSceneName);
+
+        // Wait for the scene to load
+        yield return new WaitForEndOfFrame();
+
+        // Restore the current coins
+        currentCoins = levelCoins;
+
+        // Update the UI
+        UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 }
