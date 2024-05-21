@@ -1601,7 +1601,22 @@ MonoBehaviour:
   music:
   - {fileID: 874299360015206612}
   sfx:
+  - {fileID: 7769210143797914148}
+  - {fileID: 8408279483506696857}
+  - {fileID: 2137115274245444821}
+  - {fileID: 3850677531281799905}
+  - {fileID: 4844491521848522600}
+  - {fileID: 8018792465385229272}
   - {fileID: 65331002569674382}
+  - {fileID: 1937615905633927774}
+  - {fileID: 8986314097789894308}
+  - {fileID: 407940497898527287}
+  - {fileID: 7391030905857756209}
+  - {fileID: 3927528294160111258}
+  - {fileID: 8838622361792890998}
+  - {fileID: 2616375164065933277}
+  - {fileID: 3720018557935506114}
+  - {fileID: 6567882290439247010}
   levelMusicToPlay: 0
   musicMixer: {fileID: -4271525443827960290, guid: 91a1b4a8999b43a488ecbed2a6a8051e,
     type: 2}
@@ -2214,7 +2229,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
