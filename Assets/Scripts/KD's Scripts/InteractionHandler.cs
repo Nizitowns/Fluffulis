@@ -35,7 +35,7 @@ public class InteractionHandler : MonoBehaviour
                 if(hits[uBlock][0] < registerPushTime) { return; }
                 uBlock.Push();
                 hits[uBlock][0] = 0;
-                Debug.Log("uBlock push");
+                //Debug.Log("uBlock push");
                 //if(currentHit != uBlock || ((Time.time - timeHit) > registerPushTime) )
                 //{
                 //    timeElapsed = 0;

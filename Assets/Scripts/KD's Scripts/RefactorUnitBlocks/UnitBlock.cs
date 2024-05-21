@@ -52,13 +52,45 @@ public class UnitBlock : MonoBehaviour
     private bool IsPushDirection(Vector3 direction)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit))
+        //Debug.DrawRay(transform.position, direction, Color.red);
+        //Debug.Log("checking is push direction: " + direction);
+        if(Mathf.Approximately(direction.x, 0))
         {
-            if (!hit.transform.CompareTag("Player")) { return false; }
-            if (IsBlocked(-direction)) { return false; }
-            return true;
+            
+            if ( (Physics.Raycast(transform.position, direction, out hit) && hit.transform.CompareTag("Player"))
+            || (Physics.Raycast(transform.position + transform.right * 0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
+            || (Physics.Raycast(transform.position + transform.right * -0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
+            )
+            {
+                if (IsBlocked(-direction)) { return false; }
+                Debug.Log(hit.transform.parent.name + " is player");
+                return true;
+            }
+            return false;
+
         }
-        return false;
+        else
+        {
+
+            if ( (Physics.Raycast(transform.position, direction, out hit) && hit.transform.CompareTag("Player"))
+                || (Physics.Raycast(transform.position + transform.forward * 0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
+                || (Physics.Raycast(transform.position + transform.forward * -0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
+                )
+            {
+                Debug.Log("z=0: " + direction);
+                if (IsBlocked(-direction)) { return false; }
+                Debug.Log(hit.transform.name + " is player");
+                return true;
+            }
+            return false;
+        }
+        //if (Physics.Raycast(transform.position, direction, out hit))
+        //{
+        //    if (!hit.transform.CompareTag("Player")) { return false; }
+        //    if (IsBlocked(-direction)) { return false; }
+        //    return true;
+        //}
+        //return false;
     }
 
     public bool IsBlocked(Vector3 direction)
