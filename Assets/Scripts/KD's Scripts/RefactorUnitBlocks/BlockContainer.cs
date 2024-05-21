@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BlockContainer : MonoBehaviour
 {
-    [Tooltip("Color/TypeID for comparison when checking correct button. 0 is default/any.")]
-    [SerializeField] public int typeID = 0;
+    [Tooltip("Color for comparison when checking correct button. ColorAny by default.")]
+    [SerializeField] public BlockColor color;
     public Grid grid;
     List<UnitBlock> blocks;
     List<BoxCollider> blockColliders;
@@ -48,6 +48,7 @@ public class BlockContainer : MonoBehaviour
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
         Snap(transform.position);
     }
+
     private void OnEnable()
     {
         ReceiveGravity();

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ac1f00441733148ad6067b1fad11b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
   typeID: 0
   grid: {fileID: 0}
 --- !u!1001 &735784589531308781

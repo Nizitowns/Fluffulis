@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    [Tooltip("Color/TypeID for comparison when checking correct block. 0 is default/any.")]
-    [SerializeField] public int typeID = 0;
+    [Tooltip("Color for comparison when checking correct block. ColorAny by default.")]
+    [SerializeField] public BlockColor color;
+    [Tooltip("Button manager that manages button.")]
     [SerializeField] public ButtonManager buttonManager;
     [SerializeField] LayerMask Interactable = 1 << 6;
+    [Tooltip("Don't change...")]
+    [SerializeField] public BlockColor colorAny;
 
+    //private void Awake()
+    //{
+    //    colorAny = Resources.Load<BlockColor>("BlockColor/ColorAny");
+    //}
     private void Start()
     {
+        //if (color == null) { color = Resources.Load<BlockColor>("ColorAny"); }
         if (buttonManager == null) { GameObject.Find("ButtonManager").TryGetComponent(out buttonManager); }
     }
     private void OnTriggerEnter(Collider other)
@@ -18,8 +26,8 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            if (bC != null) { if (bC.typeID != typeID && typeID != 0) { return; } }
-            Debug.Log(other.name + " has hit button");
+            if (bC != null) {Debug.Log("anyColor: " + (colorAny==null) + " color: " + (color==null) + " bC color:" +(bC.color==null)); if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
+            //Debug.Log(other.name + " has hit button");
             buttonManager.buttonActivated?.Invoke();
         }
     }
@@ -28,7 +36,7 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            if(bC != null) { if (bC.typeID != typeID && typeID != 0) { return; } }
+            if (bC != null) { if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
             Debug.Log(other.name + " exits button");
             buttonManager.buttonDeactivated?.Invoke();
         }

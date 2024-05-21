@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITrigger
+public abstract class Trigger: MonoBehaviour
 {
-    public void Activate();
-    public void DeActivate();
+    public abstract void Activate();
+    public abstract void DeActivate();
 }

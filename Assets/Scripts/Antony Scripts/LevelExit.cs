@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelExit : MonoBehaviour, ITrigger
+public class LevelExit : Trigger
 {
     // Start is called before the first frame update
     private bool exit = false;
@@ -28,12 +28,12 @@ public class LevelExit : MonoBehaviour, ITrigger
         }
     }
 
-    public void Activate()
+    public override void Activate()
     {
         CanExit();
     }
 
-    public void DeActivate()
+    public override void DeActivate()
     {
         CantExit();
     }

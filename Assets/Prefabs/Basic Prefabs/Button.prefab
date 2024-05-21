@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8665059199016781101}
+  - component: {fileID: 5925185655547143199}
   - component: {fileID: 935406443731218781}
   - component: {fileID: 2649656845242030148}
   - component: {fileID: 7539859487770631441}
-  - component: {fileID: 5925185655547143199}
   - component: {fileID: 4414717356363008035}
   m_Layer: 0
   m_Name: Button
@@ -36,6 +36,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5925185655547143199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397816452790376096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09e5cbcd604f9c4a81cfbe127b85c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
+  buttonManager: {fileID: 0}
+  Interactable:
+    serializedVersion: 2
+    m_Bits: 64
+  colorAny: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
 --- !u!33 &935406443731218781
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,21 +125,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5925185655547143199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2397816452790376096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09e5cbcd604f9c4a81cfbe127b85c71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Interactable:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!54 &4414717356363008035
 Rigidbody:
   m_ObjectHideFlags: 0
