@@ -50,6 +50,5 @@ public class InteractionHandler : MonoBehaviour
             }
 
         }
-        Debug.Log("controller collider hit on " + hit.gameObject.name);
     }
 }
