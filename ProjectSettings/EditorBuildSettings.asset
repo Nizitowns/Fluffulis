@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Playgrounds/Antonys Main Menu.unity
-    guid: 18bde7d2373bec24f9e79254a6f40946
+    path: Assets/Scenes/Levels/Main Menu.unity
+    guid: 58a27253cfe1da145b2668a27cf17fc3
   - enabled: 1
     path: Assets/Scenes/Playgrounds/Antonys Level Select.unity
     guid: e8c33e6164a3627439f08a2465e3bab9
