@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public int currentCoins;
 
+    [SerializeField] GameObject deathEffect;
+
     //[SerializeField] int levelEndMusic;
 
     private void Awake()
@@ -45,6 +47,8 @@ public class GameManager : MonoBehaviour
     public IEnumerator RespawnCoroutine()
     {
         Character.Instance.gameObject.SetActive(false);
+
+        Instantiate(deathEffect, Character.Instance.transform.position + new Vector3(0f, 0.5f, 0f), Character.Instance.transform.rotation);
 
         UIManager.Instance.fadeToBlack = true;
 

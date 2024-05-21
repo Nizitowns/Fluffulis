@@ -1584,6 +1584,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCoins: 0
+  deathEffect: {fileID: 483631422826078776, guid: d447f87ac956f3c4b860d7b6ff596cfa,
+    type: 3}
 --- !u!114 &81242371578866165
 MonoBehaviour:
   m_ObjectHideFlags: 0
