@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 1
-  pickupEffect: {fileID: 0}
+  soundToPlay: 6
 --- !u!95 &6289263493987081216
 Animator:
   serializedVersion: 5
