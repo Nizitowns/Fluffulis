@@ -1057,6 +1057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 297504184}
   - component: {fileID: 297504183}
+  - component: {fileID: 297504185}
   m_Layer: 0
   m_Name: BlockDoor
   m_TagString: Untagged
@@ -1092,6 +1093,34 @@ Transform:
   - {fileID: 524476811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &297504185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297504182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e86147fa8002a24e816f78151d0b491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 883587289}
+  trigger: {fileID: 297504183}
+  numButtonsActivated: 0
+--- !u!114 &307110536 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5925185655547143199, guid: 8b7953e597adc3c4585bfe6e120e58c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1400686993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09e5cbcd604f9c4a81cfbe127b85c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &342557759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2813,7 +2842,7 @@ PrefabInstance:
         type: 3}
       propertyPath: buttonManager
       value: 
-      objectReference: {fileID: 1505473625}
+      objectReference: {fileID: 297504185}
     - target: {fileID: 8665059199016781101, guid: 8b7953e597adc3c4585bfe6e120e58c2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5300,54 +5329,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   grid: {fileID: 0}
---- !u!1 &1505473624
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1505473626}
-  - component: {fileID: 1505473625}
-  m_Layer: 0
-  m_Name: BlockDoorManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1505473625
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1505473624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e86147fa8002a24e816f78151d0b491, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 883587289}
-  trigger: {fileID: 297504183}
-  numButtonsActivated: 0
---- !u!4 &1505473626
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1505473624}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00010225177, y: 0.94949996, z: 3.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1506285885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
@@ -5982,6 +5963,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1764118511}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1766691685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5925185655547143199, guid: 8b7953e597adc3c4585bfe6e120e58c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1662819805}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09e5cbcd604f9c4a81cfbe127b85c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1793779029 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 850213812418257336, guid: 71fbf69c66dae534abad999930ab88d5,
@@ -7018,6 +7011,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7481734400845661906, guid: 906bfdfb4a6141549b43c60daa88f4ca,
+        type: 3}
+      propertyPath: buttons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7481734400845661906, guid: 906bfdfb4a6141549b43c60daa88f4ca,
+        type: 3}
+      propertyPath: buttons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1766691685}
+    - target: {fileID: 7481734400845661906, guid: 906bfdfb4a6141549b43c60daa88f4ca,
+        type: 3}
+      propertyPath: buttons.Array.data[1]
+      value: 
+      objectReference: {fileID: 307110536}
+    - target: {fileID: 7481734400845661906, guid: 906bfdfb4a6141549b43c60daa88f4ca,
+        type: 3}
+      propertyPath: buttons.Array.data[2]
+      value: 
+      objectReference: {fileID: 883587289}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7061,5 +7074,4 @@ SceneRoots:
   - {fileID: 1855451959}
   - {fileID: 59632788}
   - {fileID: 297504184}
-  - {fileID: 1505473626}
   - {fileID: 801838706}

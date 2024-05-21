@@ -5,10 +5,6 @@ using UnityEngine;
 public class BlockDoor : Trigger
 {
     List<UnitBlock> blocks;
-    private void Awake()
-    {
-
-    }
     private void Start()
     {
         blocks = GetComponentInChildren<BlockContainer>().blocks;
@@ -30,7 +26,7 @@ public class BlockDoor : Trigger
         {
             yield return new WaitForSeconds(0.1f);
             blocks[i].gameObject.SetActive(false);
-            Debug.Log("destroy " + blocks[i].name);
+            //Debug.Log("destroy " + blocks[i].name);
         }
 
     }

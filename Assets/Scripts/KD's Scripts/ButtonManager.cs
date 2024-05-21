@@ -9,35 +9,24 @@ public class ButtonManager : MonoBehaviour
     [Tooltip("The trigger/condition that activates when all buttons are activated. i.e. LevelExit.")]
     [SerializeField] public Trigger trigger;
     public int numButtonsActivated = 0;
-    public delegate void ButtonActivated();
-    public ButtonActivated buttonActivated;
-    public delegate void ButtonDeactivated();
-    public ButtonDeactivated buttonDeactivated;
-
-    
     private void Start()
     {
         if(buttons.Length == 0) { buttons = FindObjectsOfType<Button>(); }
         if(trigger == null) { GameObject.Find("Exit").TryGetComponent(out trigger); }
+        foreach(Button b in buttons) 
+        { 
+            b.SetButtonManager(this);
+            b.buttonActivated += HandleButtonPress;
+            b.buttonDeactivated += HandleButtonRelease;
+        }
     }
-    private void OnEnable()
-    {
-        buttonActivated += HandleButtonPress;
-        buttonDeactivated += HandleButtonRelease;
-    }
-    private void OnDisable()
-    {
-        buttonActivated -=  HandleButtonPress;
-        buttonDeactivated -= HandleButtonRelease;
-    }
-
     public void HandleButtonPress()
     {
         numButtonsActivated++;
         Debug.Log(numButtonsActivated);
         if (numButtonsActivated >= buttons.Length) 
         { 
-            UnlockNextLevel(); 
+            trigger.Activate();
         }
     }
 
@@ -46,19 +35,17 @@ public class ButtonManager : MonoBehaviour
         numButtonsActivated--;
         if(numButtonsActivated < buttons.Length)
         {
-            LockNextLevel();
+            trigger.DeActivate();
         } 
     }
 
-    public void UnlockNextLevel() 
+    private void OnDestroy()
     {
-        //Debug.Log("Unlock next level!");
-        trigger.Activate();
+        foreach (Button b in buttons)
+        {
+            b.SetButtonManager(this);
+            b.buttonActivated -= HandleButtonPress;
+            b.buttonDeactivated -= HandleButtonRelease;
+        }
     }
-    public void LockNextLevel()
-    {
-        //Debug.Log("Level locked");
-        trigger.DeActivate();
-    }
-
 }

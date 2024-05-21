@@ -6,21 +6,26 @@ public class Button : MonoBehaviour
 {
     [Tooltip("Color for comparison when checking correct block. ColorAny by default.")]
     [SerializeField] public BlockColor color;
-    [Tooltip("Button manager that manages button.")]
-    [SerializeField] public ButtonManager buttonManager;
+    //[Tooltip("Button manager that manages button.")]
+    //[SerializeField] public ButtonManager buttonManager;
+    private ButtonManager buttonManager;
     [SerializeField] LayerMask Interactable = 1 << 6;
     [Tooltip("Don't change...")]
     [SerializeField] public BlockColor colorAny;
+    public delegate void ButtonActivated();
+    public ButtonActivated buttonActivated;
+    public delegate void ButtonDeactivated();
+    public ButtonDeactivated buttonDeactivated;
 
     //private void Awake()
     //{
     //    colorAny = Resources.Load<BlockColor>("BlockColor/ColorAny");
     //}
-    private void Start()
-    {
-        //if (color == null) { color = Resources.Load<BlockColor>("ColorAny"); }
-        if (buttonManager == null) { GameObject.Find("ButtonManager").TryGetComponent(out buttonManager); }
-    }
+    //private void Start()
+    //{
+    //    //if (color == null) { color = Resources.Load<BlockColor>("ColorAny"); }
+    //    if (buttonManager == null) { GameObject.Find("ButtonManager").TryGetComponent(out buttonManager); }
+    //}
     private void OnTriggerEnter(Collider other)
     {
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
@@ -28,7 +33,8 @@ public class Button : MonoBehaviour
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
             if (bC != null) {if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
             Debug.Log(other.name + " has hit button");
-            buttonManager.buttonActivated?.Invoke();
+            //buttonManager.buttonActivated?.Invoke();
+            buttonActivated?.Invoke();
         }
     }
     private void OnTriggerExit(Collider other)
@@ -38,7 +44,9 @@ public class Button : MonoBehaviour
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
             if (bC != null) { if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
             Debug.Log(other.name + " exits button");
-            buttonManager.buttonDeactivated?.Invoke();
+            //buttonManager.buttonDeactivated?.Invoke();
+            buttonDeactivated?.Invoke();
         }
     }
+    public void SetButtonManager(ButtonManager bM) { buttonManager = bM; }
 }
