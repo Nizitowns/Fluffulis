@@ -8,6 +8,7 @@ public class BlockContainer : MonoBehaviour
     [Tooltip("Color for comparison when checking correct button. ColorAny by default.")]
     [SerializeField] public BlockColor color;
     [SerializeField] public bool enablePush = true;
+    [SerializeField] int unitBlockLayer = 6;
     public Grid grid;
     public List<UnitBlock> blocks { get; private set; }
     List<BoxCollider> blockColliders;
@@ -53,19 +54,19 @@ public class BlockContainer : MonoBehaviour
     private void OnEnable()
     {
         ReceiveGravity();
-        foreach(UnitBlock u in blocks) 
-        { 
-            u.receivePush += ReceivePush;
-            u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
-        }
+        //foreach(UnitBlock u in blocks) 
+        //{ 
+        //    //u.receivePush += ReceivePush;
+        //    u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
+        //}
     }
     private void OnDisable()
     {
-        foreach (UnitBlock u in blocks) 
-        { 
-            u.receivePush -= ReceivePush;
-            u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
-        }
+        //foreach (UnitBlock u in blocks) 
+        //{ 
+        //    //u.receivePush -= ReceivePush;
+        //    u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
+        //}
     }
 
     private void Update()
@@ -183,10 +184,11 @@ public class BlockContainer : MonoBehaviour
             if (Vector3.Distance(meshRenderers[i].transform.position, pushTargets[i]) > 0.1f) { return; }
             //Debug.Log(name + " is in position: " + grid.WorldToCell(transform.position));
         }
-        for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(pushTargets[i]); }
+        for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(pushTargets[i]);  }
         pushing = false;
         isPushable = true;
         pushTargets = new List<Vector3>();
+        for (int i = 0; i < blocks.Count; i++) { ConnectBlock(blocks[i]); }
     }
     /// <summary>
     /// Snaps container to nearest point on grid.
@@ -196,5 +198,34 @@ public class BlockContainer : MonoBehaviour
     {
         //Debug.Log("Snap");
         transform.position = grid.WorldToCell(target);
+    }
+    public void ConnectBlock(UnitBlock b)
+    {
+        //Debug.Log("checking connect for " + b.name);
+        if(color.ID >= 0) { return; }
+        Vector3[] directions = { b.transform.forward, -b.transform.forward, b.transform.right, -b.transform.right };
+        RaycastHit hit;
+        foreach(Vector3 dir in directions)
+        {
+            if(Physics.Raycast(b.transform.position, dir, out hit) && hit.transform.gameObject.layer == unitBlockLayer && Vector3.Distance(b.transform.position, hit.point) < 1.1f)
+            {
+                //Debug.Log("Hit unit block!!!");
+                UnitBlock bHit = hit.transform.gameObject.GetComponentInParent<UnitBlock>();
+                if(bHit.currentContainer == this || bHit == b) { continue; }
+                if(bHit.currentContainer.color.ID > 0 || bHit.currentContainer.color.ID != color.ID) { continue; }
+                Debug.Log(b.name + " CONNECT!!! with " + bHit.transform.name);
+                foreach(UnitBlock block in bHit.currentContainer.blocks)
+                {
+                    block.currentContainer = this;
+                    block.transform.parent = transform;
+                    blocks.Add(block);
+                    meshRenderers.Add(block.GetComponentInChildren<MeshRenderer>());
+                }
+                //bHit.currentContainer = this;
+                //bHit.transform.parent = transform;
+                //blocks.Add(bHit);
+                //meshRenderers.Add(bHit.GetComponentInChildren<MeshRenderer>());
+            }
+        }
     }
 }

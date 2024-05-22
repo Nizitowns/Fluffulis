@@ -5,8 +5,8 @@ using UnityEngine;
 public class UnitBlockGravity : MonoBehaviour
 {
     UnitBlock block;
-    public delegate void ReceiveGravity();
-    public ReceiveGravity receiveGravity;
+    //public delegate void ReceiveGravity();
+    //public ReceiveGravity receiveGravity;
     private void Awake()
     {
         block = gameObject.GetComponentInParent<UnitBlock>();

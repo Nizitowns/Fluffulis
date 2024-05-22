@@ -11,7 +11,7 @@ public class UnitBlock : MonoBehaviour
     [SerializeField] LayerMask BlockLayers = ~0;
     public Grid grid;
     private BlockContainer originalContainer;
-    public BlockContainer currentContainer { get; private set; }
+    public BlockContainer currentContainer;
     private BoxCollider blockCollider;
     private MeshRenderer meshRenderer;
     private Transform groundCheck;
@@ -29,9 +29,10 @@ public class UnitBlock : MonoBehaviour
         
     }
 
-    public delegate void ReceivePush(UnitBlock block);
-    public ReceivePush receivePush;
-    public void Push() { receivePush?.Invoke(this); }
+    //public delegate void ReceivePush(UnitBlock block);
+    //public ReceivePush receivePush;
+    //public void Push() { receivePush?.Invoke(this); }
+    public void Push() { currentContainer.ReceivePush(this); }
     public Vector3 GetPushDirection()
     {
         //if (!isPushable) { return; }
@@ -63,7 +64,7 @@ public class UnitBlock : MonoBehaviour
             )
             {
                 if (IsBlocked(-direction)) { return false; }
-                Debug.Log(hit.transform.parent.name + " is player");
+                //Debug.Log(hit.transform.parent.name + " is player");
                 return true;
             }
             return false;
@@ -77,9 +78,8 @@ public class UnitBlock : MonoBehaviour
                 || (Physics.Raycast(transform.position + transform.forward * -0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
                 )
             {
-                Debug.Log("z=0: " + direction);
                 if (IsBlocked(-direction)) { return false; }
-                Debug.Log(hit.transform.name + " is player");
+                //Debug.Log(hit.transform.name + " is player");
                 return true;
             }
             return false;
