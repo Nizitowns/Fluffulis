@@ -54,6 +54,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   colorAny: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
+  effect: {fileID: 3456049099181671431, guid: 956c6bbfdcbef1e4aaf012fa04863d3f, type: 3}
 --- !u!33 &935406443731218781
 MeshFilter:
   m_ObjectHideFlags: 0

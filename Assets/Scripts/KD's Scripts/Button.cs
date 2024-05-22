@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Button : MonoBehaviour
@@ -16,6 +14,7 @@ public class Button : MonoBehaviour
     public ButtonActivated buttonActivated;
     public delegate void ButtonDeactivated();
     public ButtonDeactivated buttonDeactivated;
+    [SerializeField] GameObject effect;
 
     //private void Awake()
     //{
@@ -31,10 +30,12 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            if (bC != null) {if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
+            if (bC != null) { if (bC.color.ID != color.ID && color.ID != colorAny.ID) { return; } }
             Debug.Log(other.name + " has hit button");
             //buttonManager.buttonActivated?.Invoke();
             buttonActivated?.Invoke();
+
+            Instantiate(effect, transform.position, effect.transform.rotation);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -42,7 +43,7 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            if (bC != null) { if (bC.color.ID != color.ID && color.ID !=colorAny.ID) { return; } }
+            if (bC != null) { if (bC.color.ID != color.ID && color.ID != colorAny.ID) { return; } }
             Debug.Log(other.name + " exits button");
             //buttonManager.buttonDeactivated?.Invoke();
             buttonDeactivated?.Invoke();
