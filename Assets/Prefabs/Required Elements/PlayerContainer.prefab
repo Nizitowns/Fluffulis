@@ -1118,6 +1118,7 @@ MonoBehaviour:
   cameraAxis: {fileID: 8965511374699680593}
   baseSpeed: 3
   gravity: 3
+  soundToPlay: 0a0000000b0000000c000000
   jumpHeight: 1.2
   jumpSpeed: 3
   jumpDuration: 1.2

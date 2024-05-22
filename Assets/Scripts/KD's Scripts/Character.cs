@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     [SerializeField] Transform cameraAxis;
     [SerializeField] public float baseSpeed = 10f;
     [SerializeField] public float gravity = 9.81f;
+    [SerializeField] int[] soundToPlay;
 
     private Transform cameraTransform;
     private Transform cameraFocusPoint;
@@ -45,6 +46,7 @@ public class Character : MonoBehaviour
         gravityVector = Vector3.down * gravity;
         currentTarget = model.forward;
         yVelocity = gravityVector;
+        PlaySound();
     }
     private void Update()
     {
@@ -64,30 +66,30 @@ public class Character : MonoBehaviour
         FaceDirection(direction);
     }
 
-    private void StartJump(CallbackContext ctx) 
+    private void StartJump(CallbackContext ctx)
     {
-        if(!enableJump) { return; }
-        if(!groundCheck.Grounded() || startedJump) { return; }
+        if (!enableJump) { return; }
+        if (!groundCheck.Grounded() || startedJump) { return; }
         startedJump = true;
         startJumpY = transform.position.y;
         timeElapsed = 0;
     }
     private void Jumping()
     {
-        if(!enableJump) { return; }
-        if(!startedJump) { return; }
+        if (!enableJump) { return; }
+        if (!startedJump) { return; }
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, jumpDuration, Time.smoothDeltaTime);
         //currJumpY = Mathf.Lerp(currJumpY, startJumpY + jumpHeight, timeElapsed * jumpSpeed);
         yVelocity = Vector3.up * jumpSpeed;
-        if(transform.position.y >= startJumpY + jumpHeight) 
+        if (transform.position.y >= startJumpY + jumpHeight)
         {
-            if(timeElapsed < jumpDuration) { yVelocity = Vector3.zero; }
+            if (timeElapsed < jumpDuration) { yVelocity = Vector3.zero; }
             else
             {
                 //Debug.Log("timeElapsed: " + timeElapsed);
                 yVelocity = gravityVector;
-                startedJump = false; 
+                startedJump = false;
             }
 
         }
@@ -108,7 +110,7 @@ public class Character : MonoBehaviour
         Debug.DrawRay(cameraFocusPoint.position, yDirection * rawMove.y * 5, Color.cyan);
         Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
         return xDirection * rawMove.x + yDirection * rawMove.y;
-    }    
+    }
     private void SetMove(CallbackContext ctx)
     {
         rawMove = ctx.ReadValue<Vector2>();
@@ -124,7 +126,7 @@ public class Character : MonoBehaviour
                 moveAction.canceled += SetMove;
             }
             InputAction jumpAction = playerInput.actions["Jump"];
-            if(jumpAction != null)
+            if (jumpAction != null)
             {
                 jumpAction.started += StartJump;
                 jumpAction.canceled -= StartJump;
@@ -151,4 +153,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void PlaySound()
+    {
+        int i = Random.Range(0, soundToPlay.Length - 1);
+        AudioManager.Instance.PlaySFX(soundToPlay[i]);
+    }
 }
