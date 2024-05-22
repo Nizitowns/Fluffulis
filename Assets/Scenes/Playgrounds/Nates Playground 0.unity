@@ -158,7 +158,6 @@ MonoBehaviour:
   - {fileID: 1116888893}
   - {fileID: 668162559}
   trigger: {fileID: 14469806}
-  numButtonsActivated: 2
 --- !u!114 &14469806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4350,7 +4349,6 @@ MonoBehaviour:
   buttons:
   - {fileID: 1469204285}
   trigger: {fileID: 676479644}
-  numButtonsActivated: 0
 --- !u!114 &676479644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5240,7 +5238,6 @@ MonoBehaviour:
   buttons:
   - {fileID: 1935409995}
   trigger: {fileID: 829046887}
-  numButtonsActivated: 0
 --- !u!114 &829046887
 MonoBehaviour:
   m_ObjectHideFlags: 0

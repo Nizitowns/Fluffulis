@@ -30,8 +30,9 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            if (bC != null) { if (bC.color.ID != color.ID && color.ID != colorAny.ID) { return; } }
-            Debug.Log(other.name + " has hit button");
+            Debug.Log("block container: " + bC.name);
+            if (bC != null && bC.color.ID != color.ID && color.ID != colorAny.ID) { return; }
+            //Debug.Log(other.name + " has hit button");
             //buttonManager.buttonActivated?.Invoke();
             buttonActivated?.Invoke();
 
@@ -44,10 +45,10 @@ public class Button : MonoBehaviour
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
             if (bC != null) { if (bC.color.ID != color.ID && color.ID != colorAny.ID) { return; } }
-            Debug.Log(other.name + " exits button");
+            //Debug.Log(other.name + " exits button");
             //buttonManager.buttonDeactivated?.Invoke();
             buttonDeactivated?.Invoke();
         }
     }
-    public void SetButtonManager(ButtonManager bM) { buttonManager = bM; }
+    //public void SetButtonManager(ButtonManager bM) { buttonManager = bM; }
 }

@@ -3,7 +3,8 @@ using UnityEngine;
 public class LevelExit : Trigger
 {
     // Start is called before the first frame update
-    private bool exit = false;
+    [Tooltip("keep false if blocks need to stay on buttons to activated. Make true if you can exit without having blocks stay on buttons.")]
+    [SerializeField] public bool exit = false;
     public delegate void SuccessExit();
     public static FailExit successExit;
     public delegate void FailExit();
