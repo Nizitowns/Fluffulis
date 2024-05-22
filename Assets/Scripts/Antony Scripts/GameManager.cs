@@ -140,4 +140,9 @@ public class GameManager : MonoBehaviour
         // Update the UI
         UIManager.Instance.coinText.text = currentCoins.ToString();
     }
+
+    private void PlayMeow()
+    {
+
+    }
 }
