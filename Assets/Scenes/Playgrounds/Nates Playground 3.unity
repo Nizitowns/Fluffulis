@@ -3939,15 +3939,25 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9147532371700458265, guid: 5b25e2b85f13efe44b03cc614ae2b5a0,
         type: 3}
       insertIndex: -1
+<<<<<<< Updated upstream
       addedObject: {fileID: 1137631467}
     - targetCorrespondingSourceObject: {fileID: 9147532371700458265, guid: 5b25e2b85f13efe44b03cc614ae2b5a0,
         type: 3}
       insertIndex: -1
+=======
+>>>>>>> Stashed changes
       addedObject: {fileID: 1107361967}
     - targetCorrespondingSourceObject: {fileID: 9147532371700458265, guid: 5b25e2b85f13efe44b03cc614ae2b5a0,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 864725094}
+<<<<<<< Updated upstream
+=======
+    - targetCorrespondingSourceObject: {fileID: 9147532371700458265, guid: 5b25e2b85f13efe44b03cc614ae2b5a0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1145559887}
+>>>>>>> Stashed changes
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b25e2b85f13efe44b03cc614ae2b5a0, type: 3}
 --- !u!1 &482009746
@@ -7043,6 +7053,74 @@ Transform:
   - {fileID: 985262116}
   m_Father: {fileID: 1629064418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1006002879
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 357810240}
+    m_Modifications:
+    - target: {fileID: 1597588948286334012, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_Name
+      value: UnitBlock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ab3059ae415ec4499f93a054bc633e4, type: 3}
 --- !u!1001 &1038688420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7887,11 +7965,19 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1122415157}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!4 &1137631467 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
     type: 3}
   m_PrefabInstance: {fileID: 242948689}
+=======
+--- !u!4 &1145559887 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1006002879}
+>>>>>>> Stashed changes
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1152691636
 PrefabInstance:
