@@ -48,6 +48,7 @@ MonoBehaviour:
   color: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
   enablePush: 1
   unitBlockLayer: 6
+  soundToPlay: 020000000300000004000000
   grid: {fileID: 0}
 --- !u!1001 &735784589531308781
 PrefabInstance:

@@ -15,6 +15,7 @@ public class Button : MonoBehaviour
     public delegate void ButtonDeactivated();
     public ButtonDeactivated buttonDeactivated;
     [SerializeField] GameObject effect;
+    [SerializeField] int activationEffect;
 
     //private void Awake()
     //{
@@ -36,6 +37,7 @@ public class Button : MonoBehaviour
             buttonActivated?.Invoke();
 
             Instantiate(effect, transform.position, effect.transform.rotation);
+            AudioManager.Instance.PlaySFX(activationEffect);
         }
     }
     private void OnTriggerExit(Collider other)

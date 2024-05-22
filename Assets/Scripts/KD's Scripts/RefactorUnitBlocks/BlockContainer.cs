@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +8,8 @@ public class BlockContainer : MonoBehaviour
     [SerializeField] public BlockColor color;
     [SerializeField] public bool enablePush = true;
     [SerializeField] int unitBlockLayer = 6;
+    [SerializeField] int[] soundToPlay;
+
     public Grid grid;
     public List<UnitBlock> blocks { get; private set; }
     List<BoxCollider> blockColliders;
@@ -92,7 +93,7 @@ public class BlockContainer : MonoBehaviour
             {
                 if (hit.transform.gameObject.GetComponentInParent<BlockContainer>() == this) { continue; }
                 float distance = Vector3.Distance(u.transform.position, hit.point);
-                if(distance < shortestDistance && distance > 0.2f) { block = u; shortestDistance = distance; point = hit.point; }
+                if (distance < shortestDistance && distance > 0.2f) { block = u; shortestDistance = distance; point = hit.point; }
             }
             else { /* no hit */}
         }
@@ -103,12 +104,12 @@ public class BlockContainer : MonoBehaviour
         {
             // fall to void
             //gravityTarget = grid.WorldToCell(transform.position + Vector3.down * 200f);
-            foreach(MeshRenderer m in meshRenderers) { gravityTargets.Add(m.transform.position + Vector3.down * 200f); }
-            gravity = 1/200f;
+            foreach (MeshRenderer m in meshRenderers) { gravityTargets.Add(m.transform.position + Vector3.down * 200f); }
+            gravity = 1 / 200f;
         }
         else
         {
-            foreach (MeshRenderer m in meshRenderers) { gravityTargets.Add(grid.WorldToCell(m.transform.position + Vector3.down * shortestDistance) + Vector3.up) ; }
+            foreach (MeshRenderer m in meshRenderers) { gravityTargets.Add(grid.WorldToCell(m.transform.position + Vector3.down * shortestDistance) + Vector3.up); }
             if (shortestDistance > 1) { gravity = 1 / shortestDistance; }
             else { gravity = 1; }
         }
@@ -116,20 +117,20 @@ public class BlockContainer : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void Falling() 
+    public void Falling()
     {
-        if(!enableGravity) { return; }
+        if (!enableGravity) { return; }
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
-        for(int i=0; i<meshRenderers.Count; i++)
+        for (int i = 0; i < meshRenderers.Count; i++)
         {
             meshRenderers[i].transform.position = Vector3.Lerp(meshRenderers[i].transform.position, gravityTargets[i], timeElapsed * gravity);
         }
         for (int i = 0; i < meshRenderers.Count; i++)
         {
-            if(Vector3.Distance(meshRenderers[i].transform.position, gravityTargets[i]) > 0.1f) { return; }
+            if (Vector3.Distance(meshRenderers[i].transform.position, gravityTargets[i]) > 0.1f) { return; }
             //Debug.Log(name + " is in position: " + grid.WorldToCell(transform.position));
-        }            
+        }
         enableGravity = false;
         isPushable = true;
         for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(gravityTargets[i]); }
@@ -141,13 +142,13 @@ public class BlockContainer : MonoBehaviour
     /// <param name="block">The original unit block that was pushed. </param>
     public void ReceivePush(UnitBlock block)
     {
-        if(!enablePush) { return; }
+        if (!enablePush) { return; }
         //Debug.Log("Container ReceivePush");
-        if(pushing) { return; }
-        if(!isPushable) { return; }
+        if (pushing) { return; }
+        if (!isPushable) { return; }
         Vector3 pushDirection = block.GetPushDirection();
-        if(pushDirection == Vector3.zero) { return; }
-        foreach(UnitBlock u in blocks) { if (u.IsBlocked(pushDirection)) { return; } }
+        if (pushDirection == Vector3.zero) { return; }
+        foreach (UnitBlock u in blocks) { if (u.IsBlocked(pushDirection)) { return; } }
         PushBlockContainer(pushDirection);
     }
     /// <summary>
@@ -160,7 +161,7 @@ public class BlockContainer : MonoBehaviour
         timeElapsed = 0f;
         pushing = true;
         isPushable = false;
-        foreach(MeshRenderer m in meshRenderers) { pushTargets.Add(grid.WorldToCell(m.transform.position + dir)); }
+        foreach (MeshRenderer m in meshRenderers) { pushTargets.Add(grid.WorldToCell(m.transform.position + dir)); }
         //pushTarget = transform.position + dir;
     }
     /// <summary>
@@ -168,7 +169,7 @@ public class BlockContainer : MonoBehaviour
     /// </summary>
     private void Sliding()
     {
-        if(!enablePush) { return; }
+        if (!enablePush) { return; }
         //Debug.Log("sliding but pushing");
         if (!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
@@ -184,11 +185,12 @@ public class BlockContainer : MonoBehaviour
             if (Vector3.Distance(meshRenderers[i].transform.position, pushTargets[i]) > 0.1f) { return; }
             //Debug.Log(name + " is in position: " + grid.WorldToCell(transform.position));
         }
-        for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(pushTargets[i]);  }
+        for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(pushTargets[i]); }
         pushing = false;
         isPushable = true;
         pushTargets = new List<Vector3>();
         for (int i = 0; i < blocks.Count; i++) { ConnectBlock(blocks[i]); }
+        PlaySound();
     }
     /// <summary>
     /// Snaps container to nearest point on grid.
@@ -202,19 +204,19 @@ public class BlockContainer : MonoBehaviour
     public void ConnectBlock(UnitBlock b)
     {
         //Debug.Log("checking connect for " + b.name);
-        if(color.ID >= 0) { return; }
+        if (color.ID >= 0) { return; }
         Vector3[] directions = { b.transform.forward, -b.transform.forward, b.transform.right, -b.transform.right };
         RaycastHit hit;
-        foreach(Vector3 dir in directions)
+        foreach (Vector3 dir in directions)
         {
-            if(Physics.Raycast(b.transform.position, dir, out hit) && hit.transform.gameObject.layer == unitBlockLayer && Vector3.Distance(b.transform.position, hit.point) < 1.1f)
+            if (Physics.Raycast(b.transform.position, dir, out hit) && hit.transform.gameObject.layer == unitBlockLayer && Vector3.Distance(b.transform.position, hit.point) < 1.1f)
             {
                 //Debug.Log("Hit unit block!!!");
                 UnitBlock bHit = hit.transform.gameObject.GetComponentInParent<UnitBlock>();
-                if(bHit.currentContainer == this || bHit == b) { continue; }
-                if(bHit.currentContainer.color.ID > 0 || bHit.currentContainer.color.ID != color.ID) { continue; }
+                if (bHit.currentContainer == this || bHit == b) { continue; }
+                if (bHit.currentContainer.color.ID > 0 || bHit.currentContainer.color.ID != color.ID) { continue; }
                 Debug.Log(b.name + " CONNECT!!! with " + bHit.transform.name);
-                foreach(UnitBlock block in bHit.currentContainer.blocks)
+                foreach (UnitBlock block in bHit.currentContainer.blocks)
                 {
                     block.currentContainer = this;
                     block.transform.parent = transform;
@@ -227,5 +229,11 @@ public class BlockContainer : MonoBehaviour
                 //meshRenderers.Add(bHit.GetComponentInChildren<MeshRenderer>());
             }
         }
+    }
+
+    private void PlaySound()
+    {
+        int i = Random.Range(0, soundToPlay.Length - 1);
+        AudioManager.Instance.PlaySFX(soundToPlay[i]);
     }
 }
