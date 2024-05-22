@@ -9,6 +9,7 @@ public class LevelExit : Trigger
     public delegate void FailExit();
     public static FailExit failExit;
     [SerializeField] int soundToPlay;
+    [SerializeField] GameObject effect;
 
     public void CanExit() { exit = true; /*Debug.Log("Exitable");*/ }
     public void CantExit() { exit = false; /*Debug.Log("Not Exitable");*/ }
@@ -24,6 +25,7 @@ public class LevelExit : Trigger
         if (other.CompareTag("Player"))
         {
             //Debug.Log("player successfully exit");
+
             AudioManager.Instance.PlaySFX(soundToPlay);
             successExit?.Invoke();
             StartCoroutine(GameManager.Instance.LevelEndCoroutine());
@@ -32,11 +34,17 @@ public class LevelExit : Trigger
 
     public override void Activate()
     {
+        Instantiate(effect, transform.position, effect.transform.rotation);
         CanExit();
     }
 
     public override void DeActivate()
     {
         CantExit();
+    }
+
+    public void ActivateEffect()
+    {
+
     }
 }
