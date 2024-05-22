@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9147532371700458265}
   - component: {fileID: 1164031733140201962}
   m_Layer: 0
-  m_Name: BlockContainer
+  m_Name: BlockContainerBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ac1f00441733148ad6067b1fad11b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407, type: 2}
+  color: {fileID: 11400000, guid: d220946921eb1c348800b51f33712b69, type: 2}
   enablePush: 1
   unitBlockLayer: 6
   grid: {fileID: 0}
@@ -62,6 +62,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 2932167891548759758, guid: 2ab3059ae415ec4499f93a054bc633e4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 628221588ff042749a66d1ce283e5314, type: 2}
     - target: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
         type: 3}
       propertyPath: m_LocalPosition.x
