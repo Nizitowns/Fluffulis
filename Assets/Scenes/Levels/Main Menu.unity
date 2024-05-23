@@ -2137,6 +2137,12 @@ MonoBehaviour:
   firstLevel: Level1
   levelSelect: Antonys Level Select
   continueButton: {fileID: 332672893}
+  levelNames:
+  - Level1
+  - Level2
+  - Level3
+  - Level4
+  - Level5
 --- !u!1 &2030454568
 GameObject:
   m_ObjectHideFlags: 0

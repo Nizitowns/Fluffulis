@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelSelectEntry : MonoBehaviour
 {
 
-    [SerializeField] string levelName, levelToCheck;
+    [SerializeField] string levelName, levelToCheck, displayName;
 
     private bool canLoadLevel, levelUnlocked;
 
@@ -25,6 +25,11 @@ public class LevelSelectEntry : MonoBehaviour
             mapPointInactive.SetActive(true);
             levelUnlocked = false;
         }
+
+        if (PlayerPrefs.GetString("CurrentLevel") == levelName)
+        {
+            Player.Instance.transform.position = transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +38,7 @@ public class LevelSelectEntry : MonoBehaviour
         if (Input.GetButtonDown("Jump") && canLoadLevel && levelUnlocked)
         {
             SceneManager.LoadScene(levelName);
+            PlayerPrefs.SetString("CurrentLevel", levelName);
         }
     }
 
@@ -41,6 +47,9 @@ public class LevelSelectEntry : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canLoadLevel = true;
+
+            LevelSelectUIManager.Instance.levelNamePanel.SetActive(true);
+            LevelSelectUIManager.Instance.levelNameText.text = displayName;
         }
     }
 
@@ -49,6 +58,8 @@ public class LevelSelectEntry : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canLoadLevel = false;
+
+            LevelSelectUIManager.Instance.levelNamePanel.SetActive(false);
         }
     }
 }
