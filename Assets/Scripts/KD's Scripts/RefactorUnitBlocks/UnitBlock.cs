@@ -124,7 +124,10 @@ public class UnitBlock : MonoBehaviour
         {
             if(hits[i].transform.gameObject.layer == 2) { continue; }
             if(hits[i].transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) { continue; }
-            if(Vector3.Distance(hits[i].transform.position, transform.position) > 1.2f) { continue; }
+            if(Vector3.Distance(hits[i].point, transform.position) > 1.2f) 
+            { 
+                continue; 
+            }
             //Debug.Log(hits[i].transform.name + ", " + hits[i].transform.root.name + "is blocking " + name);
             return true;
         }
