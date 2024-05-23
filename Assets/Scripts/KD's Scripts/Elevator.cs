@@ -22,6 +22,7 @@ public class Elevator : Trigger
     private Dictionary<Transform, Transform> onTheElevator = new Dictionary<Transform, Transform>();
     private bool snap = false;
     private List<BlockContainer> blocks;
+    private bool hasTriggerDetect;
     private void Start()
     {
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
@@ -33,6 +34,9 @@ public class Elevator : Trigger
         Snap(target);
         targetPos = target.position;
         startPos = transform.position;
+        TriggerDetect tD = GetComponentInChildren<TriggerDetect>();
+        if(tD == null) { hasTriggerDetect = false; }
+        else { hasTriggerDetect = true; }
     }
     public override void Activate()
     {
@@ -105,26 +109,28 @@ public class Elevator : Trigger
     {
         t.position = grid.WorldToCell(t.position);
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    //Debug.Log("trigger enter: " + name);
-    //    if(other.transform.name == "GroundCheck") { return; }
-    //    if(onTheElevator.ContainsKey(other.transform)) { return; }
-    //    //Debug.Log("elevator adds: " + other.transform.root.name);
-    //    onTheElevator.Add(other.transform, other.transform.root);
-    //    other.transform.root.parent = transform;
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    //Debug.Log("trigger exit: " + name);
-    //    Elevator elevator;
-    //    if(!TryGetComponent(out elevator)) { return; }
-    //    if(!onTheElevator.ContainsKey(other.transform)) { return; }
-    //    if (other.transform.name == "GroundCheck") { return; }
-    //    //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
-    //    onTheElevator[other.transform].parent = null;
-    //    onTheElevator.Remove(other.transform);
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!hasTriggerDetect) { return; }
+        //Debug.Log("trigger enter: " + name);
+        if (other.transform.name == "GroundCheck") { return; }
+        if (onTheElevator.ContainsKey(other.transform)) { return; }
+        //Debug.Log("elevator adds: " + other.transform.root.name);
+        onTheElevator.Add(other.transform, other.transform.root);
+        other.transform.root.parent = transform;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!hasTriggerDetect) { return; }
+        //Debug.Log("trigger exit: " + name);
+        Elevator elevator;
+        if (!TryGetComponent(out elevator)) { return; }
+        if (!onTheElevator.ContainsKey(other.transform)) { return; }
+        if (other.transform.name == "GroundCheck") { return; }
+        //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
+        onTheElevator[other.transform].parent = null;
+        onTheElevator.Remove(other.transform);
 
-        
-    //}
+
+    }
 }
