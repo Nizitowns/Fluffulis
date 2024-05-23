@@ -1547,6 +1547,7 @@ GameObject:
   - component: {fileID: 4430139758997891320}
   - component: {fileID: 4766767442961366957}
   - component: {fileID: 81242371578866165}
+  - component: {fileID: 7450142794687232109}
   m_Layer: 0
   m_Name: Systems Manager
   m_TagString: Untagged
@@ -1622,6 +1623,18 @@ MonoBehaviour:
     type: 2}
   sfxMixer: {fileID: -3015332857909563962, guid: 91a1b4a8999b43a488ecbed2a6a8051e,
     type: 2}
+--- !u!114 &7450142794687232109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6823380403199492427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3821ad0d11c567c44a3f83aa1bae8489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6869566367168229606
 GameObject:
   m_ObjectHideFlags: 0
