@@ -1543,7 +1543,7 @@ MonoBehaviour:
   musicVolSlider: {fileID: 5517026927839972075}
   sfxVolSlider: {fileID: 617920995911620461}
   levelSelect: Antonys Level Select
-  mainMenu: Main Menu
+  mainMenu: Andrews Main Menu 1
 --- !u!1 &4453054512066690987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4869041429372046018
 RectTransform:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Continue"))
         {
-            continueButton.SetActive(true);
+            //continueButton.SetActive(true);
         }
         else
         {
@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene(levelSelect);
+        //SceneManager.LoadScene(levelSelect);
     }
 
     public void QuitGame()
