@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18346238, g: 0.22903948, b: 0.30586803, a: 1}
+  m_IndirectSpecularColor: {r: 0.18346238, g: 0.22903948, b: 0.30586797, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a3d98d2ab23ac644c9bf0b682096c692,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -6521,10 +6522,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.573
       objectReference: {fileID: 0}
+    - target: {fileID: 8339876411919550752, guid: 9005e02b16f347f41bbade1277c1d8ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8704511239448943358, guid: 9005e02b16f347f41bbade1277c1d8ab,
         type: 3}
       propertyPath: m_Name
       value: 2x1 Ramp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704511239448943358, guid: 9005e02b16f347f41bbade1277c1d8ab,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8971,6 +8982,7 @@ MonoBehaviour:
   firstLevel: Level1
   levelSelect: Antonys Level Select
   continueButton: {fileID: 332672893}
+  levelNames: []
 --- !u!1 &2030454568
 GameObject:
   m_ObjectHideFlags: 0
@@ -9665,6 +9677,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Post Processing
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775897911076885303, guid: d918197e0a5708c4584d5cbcb68bef75,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
