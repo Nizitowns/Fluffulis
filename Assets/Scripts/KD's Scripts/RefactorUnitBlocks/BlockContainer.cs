@@ -84,7 +84,7 @@ public class BlockContainer : MonoBehaviour
     {
         if (enableGravity) { return; }
         float shortestDistance = Mathf.Infinity;
-        UnitBlock block = blocks[0];
+        UnitBlock block;
         Vector3 point = transform.position;
         foreach (UnitBlock u in blocks)
         {

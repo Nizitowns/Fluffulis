@@ -29,13 +29,13 @@ public class AnimationStateController : MonoBehaviour
     private void stoping(CallbackContext ctx)
     {
         animator.SetBool("isWalking", false);
-        Debug.Log("stoping");
+        //Debug.Log("stoping");
     }
 
     private void walking(CallbackContext ctx)
     {
         animator.SetBool("isWalking", true);
-        Debug.Log("walking");
+        //Debug.Log("walking");
     }
 
     private void OnEnable()

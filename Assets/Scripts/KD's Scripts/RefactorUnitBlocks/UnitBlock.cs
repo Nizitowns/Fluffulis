@@ -37,7 +37,7 @@ public class UnitBlock : MonoBehaviour
     {
         //if (!isPushable) { return; }
         //if (pushing) { return; }
-        Vector3[] directions = { transform.forward, -transform.forward, transform.right, -transform.right };
+        Vector3[] directions = { Vector3.forward, -Vector3.forward, Vector3.right, -Vector3.right };
         foreach (Vector3 dir in directions)
         {
             if (IsPushDirection(dir))
@@ -55,21 +55,21 @@ public class UnitBlock : MonoBehaviour
         if (Mathf.Approximately(direction.x, 0))
         {
             Debug.DrawRay(transform.position, direction, Color.red, 3f);
-            Debug.DrawRay(transform.position + transform.right * 0.33f, direction, Color.red, 3f);
-            Debug.DrawRay(transform.position - transform.right * 0.33f, direction, Color.red, 3f);
+            Debug.DrawRay(transform.position + Vector3.right * 0.33f, direction, Color.red, 3f);
+            Debug.DrawRay(transform.position - Vector3.right * 0.33f, direction, Color.red, 3f);
             hits = new RaycastHit[3][] {
-                Physics.RaycastAll(transform.position + transform.right * 0.33f, direction),
-                Physics.RaycastAll(transform.position + transform.right * -0.33f, direction),
+                Physics.RaycastAll(transform.position + Vector3.right * 0.33f, direction),
+                Physics.RaycastAll(transform.position + Vector3.right * -0.33f, direction),
                 Physics.RaycastAll(transform.position, direction),
                 };
         }
         else {
             Debug.DrawRay(transform.position, direction, Color.green, 3f);
-            Debug.DrawRay(transform.position + transform.forward * 0.33f, direction, Color.green, 3f);
-            Debug.DrawRay(transform.position - transform.forward * 0.33f, direction, Color.green, 3f);
+            Debug.DrawRay(transform.position + Vector3.forward * 0.33f, direction, Color.green, 3f);
+            Debug.DrawRay(transform.position - Vector3.forward * 0.33f, direction, Color.green, 3f);
             hits = new RaycastHit[3][] {
-                Physics.RaycastAll(transform.position + transform.forward * 0.33f, direction),
-                Physics.RaycastAll(transform.position + transform.forward * -0.33f, direction),
+                Physics.RaycastAll(transform.position + Vector3.forward * 0.33f, direction),
+                Physics.RaycastAll(transform.position + Vector3.forward * -0.33f, direction),
                 Physics.RaycastAll(transform.position, direction),
                 };
         }
