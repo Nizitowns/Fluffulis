@@ -31,7 +31,7 @@ public class Button : MonoBehaviour
         if ((Interactable & (1 << other.gameObject.layer)) != 0)
         {
             BlockContainer bC = other.GetComponentInParent<BlockContainer>();
-            Debug.Log("block container: " + bC.name);
+            //Debug.Log("block container: " + bC.name);
             if (bC != null && bC.color.ID != color.ID && color.ID != colorAny.ID) { return; }
             //Debug.Log(other.name + " has hit button");
             //buttonManager.buttonActivated?.Invoke();

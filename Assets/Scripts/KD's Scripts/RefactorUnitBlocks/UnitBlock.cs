@@ -42,71 +42,90 @@ public class UnitBlock : MonoBehaviour
         {
             if (IsPushDirection(dir))
             {
-                //Push(-dir);
-                //pushing = true;
-                //isPushable = false;
                 return -dir;
             }
         }
         return Vector3.zero;
     }
+
     private bool IsPushDirection(Vector3 direction)
     {
-        RaycastHit hit;
-        //Debug.DrawRay(transform.position, direction, Color.red);
-        //Debug.Log("checking is push direction: " + direction);
-        if(Mathf.Approximately(direction.x, 0))
+        //Debug.Log("Checking push direction: " + direction);
+        RaycastHit[][] hits;
+        if (Mathf.Approximately(direction.x, 0))
         {
-            
-            if ( (Physics.Raycast(transform.position, direction, out hit) && hit.transform.CompareTag("Player"))
-            || (Physics.Raycast(transform.position + transform.right * 0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
-            || (Physics.Raycast(transform.position + transform.right * -0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
-            )
-            {
-                if (IsBlocked(-direction)) { return false; }
-                //Debug.Log(hit.transform.parent.name + " is player");
-                return true;
-            }
-            return false;
-
+            Debug.DrawRay(transform.position, direction, Color.red, 3f);
+            Debug.DrawRay(transform.position + transform.right * 0.33f, direction, Color.red, 3f);
+            Debug.DrawRay(transform.position - transform.right * 0.33f, direction, Color.red, 3f);
+            hits = new RaycastHit[3][] {
+                Physics.RaycastAll(transform.position + transform.right * 0.33f, direction),
+                Physics.RaycastAll(transform.position + transform.right * -0.33f, direction),
+                Physics.RaycastAll(transform.position, direction),
+                };
         }
-        else
+        else {
+            Debug.DrawRay(transform.position, direction, Color.green, 3f);
+            Debug.DrawRay(transform.position + transform.forward * 0.33f, direction, Color.green, 3f);
+            Debug.DrawRay(transform.position - transform.forward * 0.33f, direction, Color.green, 3f);
+            hits = new RaycastHit[3][] {
+                Physics.RaycastAll(transform.position + transform.forward * 0.33f, direction),
+                Physics.RaycastAll(transform.position + transform.forward * -0.33f, direction),
+                Physics.RaycastAll(transform.position, direction),
+                };
+        }
+        for (int i=0; i<3; i++)
         {
-
-            if ( (Physics.Raycast(transform.position, direction, out hit) && hit.transform.CompareTag("Player"))
-                || (Physics.Raycast(transform.position + transform.forward * 0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
-                || (Physics.Raycast(transform.position + transform.forward * -0.33f, direction, out hit) && hit.transform.CompareTag("Player"))
-                )
+            for(int j=0; j<hits[i].Length; j++)
             {
-                if (IsBlocked(-direction)) { return false; }
-                return true;
+                //Debug.Log(hits[i][j].transform.name + ", " + hits[i][j].transform.root.name + " was hit");
+                if (hits[i][j].transform.CompareTag("Player")) 
+                {
+                    //Debug.Log(hits[i][j].transform.name + ", " + hits[i][j].transform.root.name + " was hit");
+                    return true; 
+                }
+                
             }
-            return false;
         }
-        //if (Physics.Raycast(transform.position, direction, out hit))
-        //{
-        //    if (!hit.transform.CompareTag("Player")) { return false; }
-        //    if (IsBlocked(-direction)) { return false; }
-        //    return true;
-        //}
-        //return false;
+        return false;
     }
+    //public bool IsBlocked(Vector3 direction)
+    //{
+    //    //Debug.Log(name + " is being checked for block (UnitBlock)");
+    //    Debug.DrawRay(transform.position, direction * 1.2f, Color.red);
 
+    //    if (Physics.Raycast(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide)) 
+    //    { 
+    //        foreach(RaycastHit hit in Physics.RaycastAll(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide))
+    //        {
+    //            //Debug.Log("hits: " + hit.transform.name);
+    //            if(hit.transform.gameObject.layer == 2) 
+    //            { 
+    //                //Debug.Log(name + "is not blocked by " + hit.transform.name + " " + hit.transform.gameObject.layer); 
+    //                return false; 
+    //            }
+    //            if (hit.transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) 
+    //            {
+
+    //                return false; 
+    //            }
+    //            //Debug.Log(name + "is not blocked by " + hit.transform.name);
+    //        }
+    //        //return false;
+    //        //Debug.Log(name + " is blocked...");
+    //        return true;
+    //    }
+    //    //Debug.Log(name + "is not blocked!!!");
+    //    return false;
+    //}
     public bool IsBlocked(Vector3 direction)
     {
-        //Debug.Log("is blocked");
-        Debug.DrawRay(transform.position, direction * 1.2f, Color.red);
-        
-        if (Physics.Raycast(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide)) 
-        { 
-            foreach(RaycastHit hit in Physics.RaycastAll(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide))
-            {
-                Debug.Log("hits: " + hit.transform.name);
-                if(hit.transform.gameObject.layer == 2) { return false; }
-                if (hit.transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) { return false; }
-            }
-            //return false;
-            Debug.Log(name + " is blocked...");
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction);
+        for(int i=0; i<hits.Length; i++)
+        {
+            if(hits[i].transform.gameObject.layer == 2) { continue; }
+            if(hits[i].transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) { continue; }
+            if(Vector3.Distance(hits[i].transform.position, transform.position) > 1.2f) { continue; }
+            //Debug.Log(hits[i].transform.name + ", " + hits[i].transform.root.name + "is blocking " + name);
             return true;
         }
         return false;

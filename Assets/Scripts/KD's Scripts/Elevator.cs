@@ -36,7 +36,7 @@ public class Elevator : Trigger
     }
     public override void Activate()
     {
-        Debug.Log("Activate elevator");
+        //Debug.Log("Activate elevator");
         if(transform.position != startPos) { Debug.Log(name + " is not at startPos."); return; }
         InitializeElevator(targetPos);
         activated = true;
@@ -45,7 +45,7 @@ public class Elevator : Trigger
 
     public override void DeActivate()
     {
-        Debug.Log("Deactivate elevator");
+        //Debug.Log("Deactivate elevator");
         if (transform.position != targetPos) { Debug.Log(name + " is not at targetPos."); return; }
         InitializeElevator(startPos);
         activated = false;
@@ -55,17 +55,13 @@ public class Elevator : Trigger
     private void InitializeElevator(Vector3 pos)
     {
         timeElapsed = 0f;
-        //targetPos = target.position;
-        //startPos = transform.position;
-        //Debug.Log("Start: " + startPos + " Target: " + targetPos);
-        //Debug.Log("initialize elevator");
         currentTarget = pos;
-        Debug.Log("current target: " + pos);
+        //Debug.Log("current target: " + pos);
         TogglePushableBlocks(false);
     }
     private void TogglePushableBlocks(bool val)
     {
-        Debug.Log("Blocks can be pushed: " + val);
+        //Debug.Log("Blocks can be pushed: " + val);
         blocks = GetComponentsInChildren<BlockContainer>().ToList();
         for(int i=0; i<blocks.Count; i++)
         {
@@ -82,7 +78,7 @@ public class Elevator : Trigger
             transform.position = Vector3.Lerp(transform.position, targetPos, timeElapsed);
             if (Vector3.Distance(transform.position, targetPos) > 0.1f) { return; }
             if (snap) { return; }
-            Debug.Log("snap going towards target");
+            //Debug.Log("snap going towards target");
             Snap();
             TogglePushableBlocks(true);
         }
@@ -94,7 +90,7 @@ public class Elevator : Trigger
             transform.position = Vector3.Lerp(transform.position, startPos, timeElapsed);
             if (Vector3.Distance(transform.position, startPos) > 0.1f) { return; }
             if(snap) { return; }
-            Debug.Log("snap going towards start");
+            //Debug.Log("snap going towards start");
             Snap();
             TogglePushableBlocks(true);
         }
@@ -109,25 +105,26 @@ public class Elevator : Trigger
     {
         t.position = grid.WorldToCell(t.position);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        if(other.transform.name == "GroundCheck") { return; }
-        if(onTheElevator.ContainsKey(other.transform)) { return; }
-        Debug.Log("elevator adds: " + other.transform.root.name);
-        onTheElevator.Add(other.transform, other.transform.root);
-        other.transform.root.parent = transform;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        Elevator elevator;
-        if(!TryGetComponent(out elevator)) { return; }
-        if(!onTheElevator.ContainsKey(other.transform)) { return; }
-        if (other.transform.name == "GroundCheck") { return; }
-        Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
-        onTheElevator[other.transform].parent = null;
-        onTheElevator.Remove(other.transform);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Debug.Log("trigger enter: " + name);
+    //    if(other.transform.name == "GroundCheck") { return; }
+    //    if(onTheElevator.ContainsKey(other.transform)) { return; }
+    //    //Debug.Log("elevator adds: " + other.transform.root.name);
+    //    onTheElevator.Add(other.transform, other.transform.root);
+    //    other.transform.root.parent = transform;
+    //}
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    //Debug.Log("trigger exit: " + name);
+    //    Elevator elevator;
+    //    if(!TryGetComponent(out elevator)) { return; }
+    //    if(!onTheElevator.ContainsKey(other.transform)) { return; }
+    //    if (other.transform.name == "GroundCheck") { return; }
+    //    //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
+    //    onTheElevator[other.transform].parent = null;
+    //    onTheElevator.Remove(other.transform);
 
         
-    }
+    //}
 }

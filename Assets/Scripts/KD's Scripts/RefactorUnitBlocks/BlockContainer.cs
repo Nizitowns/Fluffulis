@@ -142,13 +142,21 @@ public class BlockContainer : MonoBehaviour
     /// <param name="block">The original unit block that was pushed. </param>
     public void ReceivePush(UnitBlock block)
     {
+
         if (!enablePush) { return; }
-        //Debug.Log("Container ReceivePush");
         if (pushing) { return; }
         if (!isPushable) { return; }
         Vector3 pushDirection = block.GetPushDirection();
+        //Debug.Log(block.name + "received push from " + pushDirection);
         if (pushDirection == Vector3.zero) { return; }
-        foreach (UnitBlock u in blocks) { if (u.IsBlocked(pushDirection)) { return; } }
+        //Debug.Log("push direction is not zero: " + pushDirection);
+        foreach (UnitBlock u in blocks) 
+        {             
+            //Debug.Log(u.name + " is being checked for isBlock from " + pushDirection + " (block container)");
+            if (u.IsBlocked(pushDirection)) {/* Debug.Log(u.name + " is blocked (block container)"); */return; }
+
+        }
+        //Debug.Log(name + " is push");
         PushBlockContainer(pushDirection);
     }
     /// <summary>
@@ -215,13 +223,14 @@ public class BlockContainer : MonoBehaviour
                 UnitBlock bHit = hit.transform.gameObject.GetComponentInParent<UnitBlock>();
                 if (bHit.currentContainer == this || bHit == b) { continue; }
                 if (bHit.currentContainer.color.ID > 0 || bHit.currentContainer.color.ID != color.ID) { continue; }
-                Debug.Log(b.name + " CONNECT!!! with " + bHit.transform.name);
+                //Debug.Log(b.name + " CONNECT!!! with " + bHit.transform.name);
                 foreach (UnitBlock block in bHit.currentContainer.blocks)
                 {
                     block.currentContainer = this;
                     block.transform.parent = transform;
                     blocks.Add(block);
                     meshRenderers.Add(block.GetComponentInChildren<MeshRenderer>());
+                    
                 }
                 //bHit.currentContainer = this;
                 //bHit.transform.parent = transform;
@@ -229,6 +238,10 @@ public class BlockContainer : MonoBehaviour
                 //meshRenderers.Add(bHit.GetComponentInChildren<MeshRenderer>());
             }
         }
+        //for(int i=0; i<blocks.Count; i++)
+        //{
+        //    Debug.Log(blocks[i].name + " is in blocks");
+        //}
     }
 
     private void PlaySound()
