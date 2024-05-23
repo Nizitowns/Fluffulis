@@ -5801,12 +5801,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!4 &864725094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
     type: 3}
   m_PrefabInstance: {fileID: 2056593547}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> Stashed changes
 --- !u!1001 &880523428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7790,6 +7793,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1099566259}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!4 &1107361967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3560407712978057105, guid: 2ab3059ae415ec4499f93a054bc633e4,
@@ -7891,6 +7895,8 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1118236293}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> Stashed changes
 --- !u!1001 &1122415157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10049,6 +10055,7 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 1412239513}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
 --- !u!1001 &1443434205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10123,6 +10130,8 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1443434205}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> Stashed changes
 --- !u!1001 &1447571042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15374,4 +15383,7 @@ SceneRoots:
   - {fileID: 1339770143}
   - {fileID: 1995698530}
   - {fileID: 1292677229}
+<<<<<<< Updated upstream
   - {fileID: 943022006}
+=======
+>>>>>>> Stashed changes
