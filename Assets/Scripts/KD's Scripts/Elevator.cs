@@ -74,12 +74,13 @@ public class Elevator : Trigger
     }
     private void Update()
     {
+        //if(Time.timeScale == 0) { return; }
         if (activated && transform.position != targetPos && !snap) 
         {
             //Debug.Log("moving towards targetPos");
             //timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime * speed);
-            transform.position = Vector3.Lerp(transform.position, targetPos, timeElapsed);
+            transform.position = Vector3.Lerp(transform.position, targetPos, timeElapsed * Time.timeScale);
             if (Vector3.Distance(transform.position, targetPos) > 0.1f) { return; }
             if (snap) { return; }
             //Debug.Log("snap going towards target");
