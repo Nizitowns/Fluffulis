@@ -41,7 +41,7 @@ public class Elevator : Trigger
     public override void Activate()
     {
         //Debug.Log("Activate elevator");
-        if(transform.position != startPos) { Debug.Log(name + " is not at startPos."); return; }
+        if(transform.position != startPos) { /*Debug.Log(name + " is not at startPos.");*/ return; }
         InitializeElevator(targetPos);
         activated = true;
         snap = false;
@@ -50,7 +50,7 @@ public class Elevator : Trigger
     public override void DeActivate()
     {
         //Debug.Log("Deactivate elevator");
-        if (transform.position != targetPos) { Debug.Log(name + " is not at targetPos."); return; }
+        if (transform.position != targetPos) { /*Debug.Log(name + " is not at targetPos.");*/ return; }
         InitializeElevator(startPos);
         activated = false;
         snap = false;
@@ -109,28 +109,28 @@ public class Elevator : Trigger
     {
         t.position = grid.WorldToCell(t.position);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(!hasTriggerDetect) { return; }
-        //Debug.Log("trigger enter: " + name);
-        if (other.transform.name == "GroundCheck") { return; }
-        if (onTheElevator.ContainsKey(other.transform)) { return; }
-        //Debug.Log("elevator adds: " + other.transform.root.name);
-        onTheElevator.Add(other.transform, other.transform.root);
-        other.transform.root.parent = transform;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (!hasTriggerDetect) { return; }
-        //Debug.Log("trigger exit: " + name);
-        Elevator elevator;
-        if (!TryGetComponent(out elevator)) { return; }
-        if (!onTheElevator.ContainsKey(other.transform)) { return; }
-        if (other.transform.name == "GroundCheck") { return; }
-        //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
-        onTheElevator[other.transform].parent = null;
-        onTheElevator.Remove(other.transform);
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(!hasTriggerDetect) { return; }
+    //    //Debug.Log("trigger enter: " + name);
+    //    if (other.transform.name == "GroundCheck") { return; }
+    //    if (onTheElevator.ContainsKey(other.transform)) { return; }
+    //    //Debug.Log("elevator adds: " + other.transform.root.name);
+    //    onTheElevator.Add(other.transform, other.transform.root);
+    //    other.transform.root.parent = transform;
+    //}
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (!hasTriggerDetect) { return; }
+    //    //Debug.Log("trigger exit: " + name);
+    //    Elevator elevator;
+    //    if (!TryGetComponent(out elevator)) { return; }
+    //    if (!onTheElevator.ContainsKey(other.transform)) { return; }
+    //    if (other.transform.name == "GroundCheck") { return; }
+    //    //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
+    //    onTheElevator[other.transform].parent = null;
+    //    onTheElevator.Remove(other.transform);
 
 
-    }
+    //}
 }
