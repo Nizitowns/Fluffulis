@@ -79,7 +79,6 @@ public class UnitBlock : MonoBehaviour
                 )
             {
                 if (IsBlocked(-direction)) { return false; }
-                //Debug.Log(hit.transform.name + " is player");
                 return true;
             }
             return false;
@@ -102,10 +101,12 @@ public class UnitBlock : MonoBehaviour
         { 
             foreach(RaycastHit hit in Physics.RaycastAll(transform.position, direction, 1.2f, BlockLayers, QueryTriggerInteraction.Collide))
             {
-                //Debug.Log("hits: " + hit.transform.parent.name);
-                if(hit.transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) { return false; }
+                Debug.Log("hits: " + hit.transform.name);
+                if(hit.transform.gameObject.layer == 2) { return false; }
+                if (hit.transform.gameObject.GetComponentInParent<BlockContainer>() == currentContainer) { return false; }
             }
             //return false;
+            Debug.Log(name + " is blocked...");
             return true;
         }
         return false;

@@ -21,7 +21,7 @@ public class ButtonManager : MonoBehaviour
     public void HandleButtonPress()
     {
         numButtonsActivated++;
-        Debug.Log(name + " activates: " + numButtonsActivated + ", total: " + buttons.Length);
+        //Debug.Log(name + " activates: " + numButtonsActivated + ", total: " + buttons.Length);
         if (numButtonsActivated >= buttons.Length)
         {
             trigger.Activate();
@@ -31,7 +31,7 @@ public class ButtonManager : MonoBehaviour
     public void HandleButtonRelease()
     {
         numButtonsActivated--;
-        Debug.Log(name + " deactivates: " + numButtonsActivated + ", total: " + buttons.Length);
+        //Debug.Log(name + " deactivates: " + numButtonsActivated + ", total: " + buttons.Length);
         if (numButtonsActivated < buttons.Length)
         {
             trigger.DeActivate();
