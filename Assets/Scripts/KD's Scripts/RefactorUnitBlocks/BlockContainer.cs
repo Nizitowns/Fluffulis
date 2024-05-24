@@ -134,6 +134,9 @@ public class BlockContainer : MonoBehaviour
         enableGravity = false;
         isPushable = true;
         for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(gravityTargets[i]); }
+        //Debug.Log("falling connect");
+        for (int i = 0; i < blocks.Count; i++) { ConnectBlock(blocks[i]); }
+        
         gravityTargets = new List<Vector3>();
     }
     /// <summary>
@@ -197,6 +200,7 @@ public class BlockContainer : MonoBehaviour
         pushing = false;
         isPushable = true;
         pushTargets = new List<Vector3>();
+        //Debug.Log("sliding connect");
         for (int i = 0; i < blocks.Count; i++) { ConnectBlock(blocks[i]); }
         PlaySound();
     }
@@ -213,7 +217,7 @@ public class BlockContainer : MonoBehaviour
     {
         //Debug.Log("checking connect for " + b.name);
         if (color.ID >= 0) { return; }
-        Vector3[] directions = { b.transform.forward, -b.transform.forward, b.transform.right, -b.transform.right };
+        Vector3[] directions = { b.transform.forward, -b.transform.forward, b.transform.right, -b.transform.right, b.transform.up, -b.transform.up };
         RaycastHit hit;
         foreach (Vector3 dir in directions)
         {

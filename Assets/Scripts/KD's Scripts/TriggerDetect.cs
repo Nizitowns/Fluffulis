@@ -45,25 +45,38 @@ public class TriggerDetect : MonoBehaviour
         if (other.transform.name == "GroundCheck" && bC == null) { Debug.Log(other.transform.root.name + " is groundcheck"); return; }
         if (onTheElevator.ContainsKey(other.transform))
         { 
-            Debug.Log(other.transform.name + ",  " + other.transform.root.name + "exists"); 
+            //Debug.Log(other.transform.name + ",  " + other.transform.root.name + "exists"); 
             return; 
         }
         
         // other is not child of elevator, add to dict
         if(otherElevator == null && bC != null) 
         {
-            Debug.Log(bC.name + " was added to " + elevator.name);
+            //Debug.Log(bC.name + " was added to " + elevator.name);
             onTheElevator.Add(other.transform, bC.transform);
             bC.transform.parent = elevator.transform;
         }
         // otherr is a child of different elevator
         else if(otherElevator != elevator && bC != null)
         {
-            Debug.Log(bC.name + " was added to " + elevator.name);
+            //Debug.Log(bC.name + " was added to " + elevator.name);
             bC.transform.parent = null;
             otherElevator.GetComponentInChildren<TriggerDetect>().onTheElevator.Remove(other.transform);
             onTheElevator.Add(other.transform, bC.transform);
             bC.transform.parent = elevator.transform;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Elevator otherElevator = other.GetComponentInParent<Elevator>();
+        BlockContainer bC = other.gameObject.GetComponentInParent<BlockContainer>();
+        if(onTheElevator.ContainsKey(other.transform))
+        {
+            if(otherElevator == elevator && bC != null) 
+            {
+                bC.transform.parent = null;
+                onTheElevator.Remove(other.transform);
+            }
         }
     }
 }

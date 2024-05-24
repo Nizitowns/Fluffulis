@@ -91,7 +91,7 @@ public class Elevator : Trigger
         {
             //Debug.Log("moving towards startPos");
             //timeElapsed += Time.smoothDeltaTime;
-            timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime * speed);
+            timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime * speed * Time.timeScale);
             transform.position = Vector3.Lerp(transform.position, startPos, timeElapsed);
             if (Vector3.Distance(transform.position, startPos) > 0.1f) { return; }
             if(snap) { return; }
