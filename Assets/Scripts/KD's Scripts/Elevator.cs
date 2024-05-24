@@ -11,7 +11,7 @@ public class Elevator : Trigger
     [SerializeField] public Transform start = null;
     private Vector3 targetPos;
     private Vector3 startPos;
-
+    int soundToPlay = 8;
 
     private bool activated = false;
     private float timeElapsed = 0;
@@ -62,6 +62,7 @@ public class Elevator : Trigger
         currentTarget = pos;
         //Debug.Log("current target: " + pos);
         TogglePushableBlocks(false);
+        PlayElevatorMoveSound();
     }
     private void TogglePushableBlocks(bool val)
     {
@@ -109,6 +110,11 @@ public class Elevator : Trigger
     public void Snap(Transform t)
     {
         t.position = grid.WorldToCell(t.position);
+    }
+
+    public void PlayElevatorMoveSound()
+    {
+        AudioManager.Instance.PlaySFX(soundToPlay);
     }
     //private void OnTriggerEnter(Collider other)
     //{

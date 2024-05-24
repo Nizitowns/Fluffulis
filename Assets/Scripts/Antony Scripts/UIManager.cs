@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject pauseScreen, optionsScreen;
     public Slider musicVolSlider, sfxVolSlider;
     [SerializeField] string levelSelect, mainMenu;
-
+    [SerializeField] int hoverSound;
+    [SerializeField] int clickSound;
 
     private void Awake()
     {
@@ -85,5 +86,14 @@ public class UIManager : MonoBehaviour
     public void SetSFXLevel()
     {
         AudioManager.Instance.SetSFXLevel();
+    }
+    
+    public void PlayClickSound()
+    {
+        AudioManager.Instance.PlaySFX(clickSound);
+    }
+    public void PlayHoverSound()
+    {
+        AudioManager.Instance.PlaySFX(hoverSound);
     }
 }
