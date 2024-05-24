@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private Vector3 respawnPosition;
+    [HideInInspector] public Vector3 respawnPosition;
 
     public int currentCoins;
 
@@ -37,9 +37,10 @@ public class GameManager : MonoBehaviour
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
 
-        respawnPosition = Character.Instance.transform.position;
+        //respawnPosition = Character.Instance.transform.position;
 
         AddCoins(0);
+        if (UIManager.Instance == null) { return; }
         UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             ReloadScene();
         }
+        if(UIManager.Instance == null) { return; }
         UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
     public void AddCoins(int coinsToAdd)
     {
         currentCoins += coinsToAdd;
+        if (UIManager.Instance == null) { return; }
         UIManager.Instance.coinText.text = currentCoins.ToString();
     }
 

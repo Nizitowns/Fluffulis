@@ -42,6 +42,7 @@ public class Character : MonoBehaviour
     }
     private void Start()
     {
+        GameManager.Instance.respawnPosition = transform.position;
         cameraTransform = Camera.main.transform;
         gravityVector = Vector3.down * gravity;
         currentTarget = model.forward;
