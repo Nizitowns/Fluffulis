@@ -37691,6 +37691,11 @@ PrefabInstance:
       propertyPath: m_Lens.OrthographicSize
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5444109866855250529, guid: e65cfa81223ef034293604a31ff179a6,
+        type: 3}
+      propertyPath: enableJump
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6503957628237132102, guid: e65cfa81223ef034293604a31ff179a6,
         type: 3}
       propertyPath: m_Name
