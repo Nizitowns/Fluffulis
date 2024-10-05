@@ -11,9 +11,10 @@ To view the project, download the ZIP or clone the repository. Then add the proj
 
 
 Art:
+* CaseyLab
 * [daisyvelasquez](https://daisyvelasquez.itch.io/)
 * [VirtualRook](https://virtualrook.itch.io/)
-* CaseyLab
+
 
 Design:
 * [mmcgeehan1128](https://mmcgeehan1128.itch.io/)
