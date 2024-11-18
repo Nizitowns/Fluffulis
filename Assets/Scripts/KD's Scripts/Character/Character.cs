@@ -4,7 +4,6 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Character : MonoBehaviour
 {
-
     public static Character Instance;
 
     CharacterController controller;
@@ -81,14 +80,12 @@ public class Character : MonoBehaviour
         if (!startedJump) { return; }
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, jumpDuration, Time.smoothDeltaTime);
-        //currJumpY = Mathf.Lerp(currJumpY, startJumpY + jumpHeight, timeElapsed * jumpSpeed);
         yVelocity = Vector3.up * jumpSpeed;
         if (transform.position.y >= startJumpY + jumpHeight)
         {
             if (timeElapsed < jumpDuration) { yVelocity = Vector3.zero; }
             else
             {
-                //Debug.Log("timeElapsed: " + timeElapsed);
                 yVelocity = gravityVector;
                 startedJump = false;
             }
