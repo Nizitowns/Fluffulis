@@ -2009,7 +2009,8 @@ PrefabInstance:
         type: 3}
       propertyPath: colorAny
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407,
+        type: 2}
     - target: {fileID: 8665059199016781101, guid: bde8d1d43def1c5428931c7d94feec1e,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -3460,7 +3461,8 @@ PrefabInstance:
         type: 3}
       propertyPath: colorAny
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 359fd3252bec0844d894f23f51c36407,
+        type: 2}
     - target: {fileID: 8665059199016781101, guid: 9761d1cb570fae047b5b833933042ba3,
         type: 3}
       propertyPath: m_LocalScale.y
