@@ -35,8 +35,6 @@ public class CameraBehavior : MonoBehaviour
     }
     void StartRotateOverrideFreeLook(CallbackContext ctx)
     {
-        //Debug.Log("startoverridefreelook is called");
-        //if (vcamInput == null) { return; }
         rotationDirection = (int) ctx.ReadValue<float>();
         timeElapsed = 0;
         vcamInput.enabled = false;
@@ -74,7 +72,6 @@ public class CameraBehavior : MonoBehaviour
             if(cameraRotation != null) 
             {
                 cameraRotation.performed += StartRotateOverrideFreeLook;
-                //cameraRotation.performed -= StartRotateOverrideFreeLook;
             }
         }
     }
