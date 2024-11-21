@@ -11,10 +11,6 @@ using static UnityEngine.InputSystem.InputAction;
 /// </summary>
 public class CameraBehavior : MonoBehaviour
 {
-    public delegate void BeginPosRotate();
-    public static BeginPosRotate beginPosRotate;
-    public delegate void BeginNegRotate();
-    public static BeginNegRotate beginNegRotate;
     public int rotationDirection { get; private set; }
 
     [SerializeField] public float rotateAmount = 15;
