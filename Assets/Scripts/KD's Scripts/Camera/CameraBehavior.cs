@@ -42,7 +42,7 @@ public class CameraBehavior : MonoBehaviour
     /// while disabling the CinemachineInputProvider input (to ignore default camera control inputs).
     /// </summary>
     /// <param name="ctx"> Allows access to player input value. </param>
-    void StartRotateOverrideFreeLook(CallbackContext ctx)
+    private void StartRotateOverrideFreeLook(CallbackContext ctx)
     {
         rotationDirection = (int) ctx.ReadValue<float>();
         timeElapsed = 0;
@@ -53,7 +53,7 @@ public class CameraBehavior : MonoBehaviour
     /// <summary>
     /// Handles smooth rotation towards targetAngle calculated from input and current angle. 
     /// </summary>
-    void RotateOverrideFreeLook() 
+    private void RotateOverrideFreeLook() 
     {
         if(vcamInput.enabled == true) { return; }
         timeElapsed += Time.smoothDeltaTime;
