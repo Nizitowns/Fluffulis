@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
+/// <summary>
+/// Handles basic character controls, including movement, look, and jump in relation to the camera.
+/// </summary>
 public class Character : MonoBehaviour
 {
     public static Character Instance;
@@ -20,9 +23,7 @@ public class Character : MonoBehaviour
     private Vector3 currentTarget;
     public Vector2 rawMove { get; private set; }
 
-    /// <summary>
-    /// Jump Variables
-    /// </summary>
+    // Jump Variables
     public float jumpHeight = 1.2f;
     public float jumpSpeed = 1f;
     public float jumpDuration = 1f;
@@ -31,6 +32,11 @@ public class Character : MonoBehaviour
     private float timeElapsed;
     private GroundCheck groundCheck;
     public bool enableJump = true;
+
+    /// <summary>
+    /// Finds necessary components and sets them to properties.
+    /// Sets this component as a referencable Instance in the scene.
+    /// </summary>
     private void Awake()
     {
         Instance = this;
@@ -39,6 +45,9 @@ public class Character : MonoBehaviour
         model = GameObject.Find("CharacterModel").transform;
         groundCheck = GetComponentInChildren<GroundCheck>();
     }
+    /// <summary>
+    /// Sets property values to default, plays sound at start.
+    /// </summary>
     private void Start()
     {
         GameManager.Instance.respawnPosition = transform.position;
@@ -48,11 +57,18 @@ public class Character : MonoBehaviour
         yVelocity = gravityVector;
         PlaySound();
     }
+    /// <summary>
+    /// Handles jump and movement behavior every frame.
+    /// </summary>
     private void Update()
     {
         Jumping();
         Move();
     }
+    /// <summary>
+    /// Gets player to move and look in direction GetDirection(),
+    /// at velocity rate (includes constant gravity).
+    /// </summary>
     private void Move()
     {
         // direction and apply speed
@@ -66,6 +82,10 @@ public class Character : MonoBehaviour
         FaceDirection(direction);
     }
 
+    /// <summary>
+    /// If jump is enabled, the player is grounded, and has not started jumping, begin jumping.
+    /// </summary>
+    /// <param name="ctx"> Necessary parameter for subscribing to inputAction events. </param>
     private void StartJump(CallbackContext ctx)
     {
         if (!enableJump) { return; }
@@ -74,6 +94,11 @@ public class Character : MonoBehaviour
         startJumpY = transform.position.y;
         timeElapsed = 0;
     }
+
+    /// <summary>
+    /// Moves towards jump height at a constant rate. When reaching jump height, begin falling 
+    /// at a constant rate.
+    /// </summary>
     private void Jumping()
     {
         if (!enableJump) { return; }
@@ -92,12 +117,21 @@ public class Character : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Looks in direction player is moving. If no movement, do nothing (looks at previous look target).
+    /// </summary>
+    /// <param name="direction"></param>
     private void FaceDirection(Vector3 direction)
     {
         if (Mathf.Approximately(direction.x, 0) && Mathf.Approximately(direction.z, 0)) { }
         else { currentTarget = direction; }
         model.LookAt(model.position + currentTarget);
     }
+    /// <summary>
+    /// Gets the direction on the horizontal plane (x,z) from player to camera and relates it
+    /// to the raw input values from the rawMove Vector2.
+    /// </summary>
+    /// <returns> Returns the movement/look direction in relation to the direction from player to camera. </returns>
     private Vector3 GetDirection()
     {
         // get vector from camera to focus point
@@ -109,10 +143,20 @@ public class Character : MonoBehaviour
         Debug.DrawRay(cameraFocusPoint.position, xDirection * rawMove.x * 5, Color.green);
         return xDirection * rawMove.x + yDirection * rawMove.y;
     }
+
+    /// <summary>
+    /// Sets rawMove to the value of the Move action input.
+    /// Other methods will reference rawMove to determine movement and direction.
+    /// </summary>
+    /// <param name="ctx"></param>
     private void SetMove(CallbackContext ctx)
     {
         rawMove = ctx.ReadValue<Vector2>();
     }
+
+    /// <summary>
+    /// Subscribes SetMove() to the moveAction event and StartJump() to the jumpAction event.
+    /// </summary>
     private void OnEnable()
     {
         if (TryGetComponent(out PlayerInput playerInput))
@@ -131,6 +175,10 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Unsubscribes SetMove() from the moveAction event and StartJump() from the jumpAction event.
+    /// </summary>
     private void OnDisable()
     {
         rawMove = Vector2.zero;
@@ -151,6 +199,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays a sound from an array of sounds in AudioManager.
+    /// </summary>
     private void PlaySound()
     {
         int i = Random.Range(0, soundToPlay.Length - 1);
