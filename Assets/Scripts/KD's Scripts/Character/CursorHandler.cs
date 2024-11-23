@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// A component that locks and hides the cursor on start.
+/// </summary>
 public class CursorHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Locks and hides the cursor on start if the current scene is not the first scene (main menu).
     void Start()
     {
         if(SceneManager.GetActiveScene().buildIndex == 0) { return; }
