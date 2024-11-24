@@ -46,8 +46,9 @@ public class InteractionHandler : MonoBehaviour
                 {
                     hits[uBlock] = new float[] { 0, Time.time };
                 }
-                
+
                 // pushes the block and tracks cooldown
+                // Note: maybe start a coroutine to log the time passed instead, since this section of code only gets called when the player is in contact with the block.
                 hits[uBlock][0] += Time.deltaTime;
                 if(hits[uBlock][0] < registerPushTime) { return; }
                 uBlock.Push();
