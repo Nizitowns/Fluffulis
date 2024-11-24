@@ -9,7 +9,6 @@ public class GroundCheck : MonoBehaviour
     public bool Grounded()
     {
         bool isGrounded = Physics.CheckSphere(transform.position, radius, ~player, QueryTriggerInteraction.Ignore);
-        //Debug.Log("isGrounded: " + isGrounded);
         return isGrounded;
         
     }
