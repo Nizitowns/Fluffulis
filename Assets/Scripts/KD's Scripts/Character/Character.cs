@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     private Transform model;
     public Vector3 gravityVector;
     public Vector3 yVelocity;
-    [SerializeField] Transform cameraAxis;
+    [SerializeField] private Transform cameraAxis;
     [SerializeField] public float baseSpeed = 10f;
     [SerializeField] public float gravity = 9.81f;
     [SerializeField] private int[] soundToPlay;
