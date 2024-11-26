@@ -9,14 +9,14 @@ public class Character : MonoBehaviour
 {
     public static Character Instance;
 
-    CharacterController controller;
-    Transform model;
+    private CharacterController controller;
+    private Transform model;
     public Vector3 gravityVector;
     public Vector3 yVelocity;
     [SerializeField] Transform cameraAxis;
     [SerializeField] public float baseSpeed = 10f;
     [SerializeField] public float gravity = 9.81f;
-    [SerializeField] int[] soundToPlay;
+    [SerializeField] private int[] soundToPlay;
 
     private Transform cameraTransform;
     private Transform cameraFocusPoint;
@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
     public float jumpHeight = 1.2f;
     public float jumpSpeed = 1f;
     public float jumpDuration = 1f;
-    bool startedJump = false;
+    private bool startedJump = false;
     private float startJumpY;
     private float timeElapsed;
     private GroundCheck groundCheck;
