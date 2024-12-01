@@ -22,7 +22,6 @@ public class BlockDoor : Trigger
     /// </summary>
     public override void Activate()
     {
-        Debug.Log("Activate BlockDoor!");
         StartCoroutine(DelayDestroy());
     }
 
