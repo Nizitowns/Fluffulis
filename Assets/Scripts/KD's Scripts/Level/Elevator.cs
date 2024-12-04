@@ -19,10 +19,8 @@ public class Elevator : Trigger
     private float duration = 1f;
     [SerializeField] public float speed = 0.05f;
     private Grid grid;
-    private Dictionary<Transform, Transform> onTheElevator = new Dictionary<Transform, Transform>();
     private bool snap = false;
     private List<BlockContainer> blocks;
-    private bool hasTriggerDetect;
     private void Start()
     {
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
@@ -34,9 +32,6 @@ public class Elevator : Trigger
         Snap(target);
         targetPos = target.position;
         startPos = transform.position;
-        TriggerDetect tD = GetComponentInChildren<TriggerDetect>();
-        if(tD == null) { hasTriggerDetect = false; }
-        else { hasTriggerDetect = true; }
     }
     public override void Activate()
     {
