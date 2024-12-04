@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+/// <summary>
+/// Elevator is a component for handling triggerable movement to and from a start position and target position.
+/// </summary>
 public class Elevator : Trigger
 {
     [Tooltip("The position that the Elevator moves towards. On activate, move towards target.")]
@@ -21,6 +23,9 @@ public class Elevator : Trigger
     private Grid grid;
     private bool snap = false;
     private List<BlockContainer> blocks;
+    /// <summary>
+    /// Initializes properties of Elevator, ensures the start and target transforms are snapped to the grid.
+    /// </summary>
     private void Start()
     {
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
@@ -33,6 +38,9 @@ public class Elevator : Trigger
         targetPos = target.position;
         startPos = transform.position;
     }
+    /// <summary>
+    /// Begins moving the elevator towards the target.
+    /// </summary>
     public override void Activate()
     {
         if(transform.position != startPos) { return; }
@@ -40,7 +48,9 @@ public class Elevator : Trigger
         activated = true;
         snap = false;
     }
-
+    /// <summary>
+    /// Begins moving the elevator towards the start.
+    /// </summary>
     public override void DeActivate()
     {
         if (transform.position != targetPos) { return; }
@@ -48,7 +58,10 @@ public class Elevator : Trigger
         activated = false;
         snap = false;
     }
-
+    /// <summary>
+    /// Resets state properties before moving the elevator.
+    /// </summary>
+    /// <param name="pos"></param>
     private void InitializeElevator(Vector3 pos)
     {
         timeElapsed = 0f;
@@ -56,6 +69,11 @@ public class Elevator : Trigger
         TogglePushableBlocks(false);
         PlayElevatorMoveSound();
     }
+    /// <summary>
+    /// Toggles whether blocks in the level can be pushed. 
+    /// Blocks should not be pushable when the elevator is moving.
+    /// </summary>
+    /// <param name="val"></param>
     private void TogglePushableBlocks(bool val)
     {
         blocks = GetComponentsInChildren<BlockContainer>().ToList();
@@ -64,6 +82,9 @@ public class Elevator : Trigger
             blocks[i].enablePush = val;
         }
     }
+    /// <summary>
+    /// Handles movement of elevator at each frame, depending on whether the trigger was activated or deactivated.
+    /// </summary>
     private void Update()
     {
         if (activated && transform.position != targetPos && !snap) 
@@ -85,16 +106,25 @@ public class Elevator : Trigger
             TogglePushableBlocks(true);
         }
     }
+    /// <summary>
+    /// Snaps the elevator to the grid.
+    /// </summary>
     public void Snap()
     {
         snap = true;
         transform.position = grid.WorldToCell(currentTarget);
     }
+    /// <summary>
+    /// Snaps the Transform parameter to the grid.
+    /// </summary>
+    /// <param name="t"> The Transform being snapped. </param>
     public void Snap(Transform t)
     {
         t.position = grid.WorldToCell(t.position);
     }
-
+    /// <summary>
+    /// Plays an elevator sound (when elevator begins moving).
+    /// </summary>
     public void PlayElevatorMoveSound()
     {
         AudioManager.Instance.PlaySFX(soundToPlay);
