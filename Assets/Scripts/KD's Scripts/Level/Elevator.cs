@@ -40,8 +40,7 @@ public class Elevator : Trigger
     }
     public override void Activate()
     {
-        //Debug.Log("Activate elevator");
-        if(transform.position != startPos) { /*Debug.Log(name + " is not at startPos.");*/ return; }
+        if(transform.position != startPos) { return; }
         InitializeElevator(targetPos);
         activated = true;
         snap = false;
@@ -49,8 +48,7 @@ public class Elevator : Trigger
 
     public override void DeActivate()
     {
-        //Debug.Log("Deactivate elevator");
-        if (transform.position != targetPos) { /*Debug.Log(name + " is not at targetPos.");*/ return; }
+        if (transform.position != targetPos) { return; }
         InitializeElevator(startPos);
         activated = false;
         snap = false;
@@ -60,13 +58,11 @@ public class Elevator : Trigger
     {
         timeElapsed = 0f;
         currentTarget = pos;
-        //Debug.Log("current target: " + pos);
         TogglePushableBlocks(false);
         PlayElevatorMoveSound();
     }
     private void TogglePushableBlocks(bool val)
     {
-        //Debug.Log("Blocks can be pushed: " + val);
         blocks = GetComponentsInChildren<BlockContainer>().ToList();
         for(int i=0; i<blocks.Count; i++)
         {
@@ -75,35 +71,27 @@ public class Elevator : Trigger
     }
     private void Update()
     {
-        //if(Time.timeScale == 0) { return; }
         if (activated && transform.position != targetPos && !snap) 
         {
-            //Debug.Log("moving towards targetPos");
-            //timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime * speed);
             transform.position = Vector3.Lerp(transform.position, targetPos, timeElapsed * Time.timeScale);
             if (Vector3.Distance(transform.position, targetPos) > 0.1f) { return; }
             if (snap) { return; }
-            //Debug.Log("snap going towards target");
             Snap();
             TogglePushableBlocks(true);
         }
         else if (!activated && transform.position != startPos && !snap)
         {
-            //Debug.Log("moving towards startPos");
-            //timeElapsed += Time.smoothDeltaTime;
             timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime * speed * Time.timeScale);
             transform.position = Vector3.Lerp(transform.position, startPos, timeElapsed);
             if (Vector3.Distance(transform.position, startPos) > 0.1f) { return; }
             if(snap) { return; }
-            //Debug.Log("snap going towards start");
             Snap();
             TogglePushableBlocks(true);
         }
     }
     public void Snap()
     {
-        //Debug.Log("Snap");
         snap = true;
         transform.position = grid.WorldToCell(currentTarget);
     }
@@ -116,28 +104,4 @@ public class Elevator : Trigger
     {
         AudioManager.Instance.PlaySFX(soundToPlay);
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(!hasTriggerDetect) { return; }
-    //    //Debug.Log("trigger enter: " + name);
-    //    if (other.transform.name == "GroundCheck") { return; }
-    //    if (onTheElevator.ContainsKey(other.transform)) { return; }
-    //    //Debug.Log("elevator adds: " + other.transform.root.name);
-    //    onTheElevator.Add(other.transform, other.transform.root);
-    //    other.transform.root.parent = transform;
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (!hasTriggerDetect) { return; }
-    //    //Debug.Log("trigger exit: " + name);
-    //    Elevator elevator;
-    //    if (!TryGetComponent(out elevator)) { return; }
-    //    if (!onTheElevator.ContainsKey(other.transform)) { return; }
-    //    if (other.transform.name == "GroundCheck") { return; }
-    //    //Debug.Log("elevator removes: " + onTheElevator[other.transform].name);
-    //    onTheElevator[other.transform].parent = null;
-    //    onTheElevator.Remove(other.transform);
-
-
-    //}
 }
