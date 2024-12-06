@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// TriggerDetect handles elevator functionality when in use or not in use.
+/// </summary>
 public class TriggerDetect : MonoBehaviour
 {
     [HideInInspector]public Dictionary<Transform, Transform> onTheElevator = new Dictionary<Transform, Transform>();
     Elevator elevator;
+    /// <summary>
+    /// Finds the elevator component TriggerDetect is associated with.
+    /// </summary>
     private void Awake()
     {
         elevator = GetComponentInParent<Elevator>();
     }
+    /// <summary>
+    /// Ensures that blocks on an elevator also move with the elevator.
+    /// </summary>
+    /// <param name="other"> A collider that has collided with the elevator. </param>
     private void OnTriggerEnter(Collider other)
     {
         Elevator otherElevator = other.GetComponentInParent<Elevator>();
@@ -37,6 +47,10 @@ public class TriggerDetect : MonoBehaviour
             bC.transform.parent = elevator.transform;
         }
     }
+    /// <summary>
+    /// Ensures that blocks off the elevator do not move with the elevator.
+    /// </summary>
+    /// <param name="other"> A collider that has exited the elevator. </param>
     private void OnTriggerExit(Collider other)
     {
         Elevator otherElevator = other.GetComponentInParent<Elevator>();
