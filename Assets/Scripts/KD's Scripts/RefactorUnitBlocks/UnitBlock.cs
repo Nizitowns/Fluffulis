@@ -10,6 +10,9 @@ public class UnitBlock : MonoBehaviour
     private MeshRenderer meshRenderer;
     private Transform groundCheck;
 
+    /// <summary>
+    /// Initializes properties by finding necessary components.
+    /// </summary>
     private void Awake()
     {
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
@@ -20,7 +23,14 @@ public class UnitBlock : MonoBehaviour
 
         
     }
+    /// <summary>
+    /// Handles push behavior for a BlockContainer, consisting of one or  more UnitBlocks.
+    /// </summary>
     public void Push() { currentContainer.ReceivePush(this); }
+    /// <summary>
+    /// Determines the direction the UnitBlock is being pushed towards.
+    /// </summary>
+    /// <returns> Returns the direction the UnitBlock is being pushed towards. </returns>
     public Vector3 GetPushDirection()
     {
         Vector3[] directions = { Vector3.forward, -Vector3.forward, Vector3.right, -Vector3.right };
@@ -33,7 +43,11 @@ public class UnitBlock : MonoBehaviour
         }
         return Vector3.zero;
     }
-
+    /// <summary>
+    /// Verifies push direction by checking whether a raycast in direction hits the player.
+    /// </summary>
+    /// <param name="direction"> The direction to send the raycast, which checks for player hit. </param>
+    /// <returns> True if player is hit, false otherwise. </returns>
     private bool IsPushDirection(Vector3 direction)
     {
         RaycastHit[][] hits;
@@ -71,6 +85,11 @@ public class UnitBlock : MonoBehaviour
         }
         return false;
     }
+    /// <summary>
+    /// Checks if the block is being blocked in the position where the block should move after the push.
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns> True if the block is blocked, false otherwise. </returns>
     public bool IsBlocked(Vector3 direction)
     {
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction);
@@ -86,6 +105,10 @@ public class UnitBlock : MonoBehaviour
         }
         return false;
     }
+    /// <summary>
+    /// Snaps the block to a grid cell.
+    /// </summary>
+    /// <param name="target"> The position of the block. </param>
     public void Snap(Vector3 target)
     {
         transform.position = grid.WorldToCell(target);
