@@ -15,6 +15,7 @@ public class UnitBlock : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        currentContainer = transform.GetComponentInParent<BlockContainer>();
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
         blockCollider = GetComponentInChildren<BoxCollider>();
         groundCheck = GetComponentInChildren<Rigidbody>().transform;
