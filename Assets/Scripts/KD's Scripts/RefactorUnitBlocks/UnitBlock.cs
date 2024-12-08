@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class UnitBlock : MonoBehaviour
 {
-    /// <summary>
-    /// Layers that cause blockage
-    /// BlockLayers / IsBlocked() need to be adjusted to account for adjacent blocks apart of same container
-    /// </summary>
-    [SerializeField] LayerMask BlockLayers = ~0;
     public Grid grid;
-    private BlockContainer originalContainer;
     public BlockContainer currentContainer;
     private BoxCollider blockCollider;
     private MeshRenderer meshRenderer;
@@ -18,8 +12,6 @@ public class UnitBlock : MonoBehaviour
 
     private void Awake()
     {
-        // set originalContainer
-        originalContainer = currentContainer = transform.GetComponentInParent<BlockContainer>();
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
         blockCollider = GetComponentInChildren<BoxCollider>();
         groundCheck = GetComponentInChildren<Rigidbody>().transform;
