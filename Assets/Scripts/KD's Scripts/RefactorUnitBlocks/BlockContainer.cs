@@ -42,7 +42,6 @@ public class BlockContainer : MonoBehaviour
     /// Gravity State
     /// </summary>
     private bool enableGravity = false;
-    //private Vector3 gravityTarget;
     private List<Vector3> gravityTargets = new List<Vector3>();
     private void Awake()
     {
@@ -55,19 +54,6 @@ public class BlockContainer : MonoBehaviour
     private void OnEnable()
     {
         ReceiveGravity();
-        //foreach(UnitBlock u in blocks) 
-        //{ 
-        //    //u.receivePush += ReceivePush;
-        //    u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
-        //}
-    }
-    private void OnDisable()
-    {
-        //foreach (UnitBlock u in blocks) 
-        //{ 
-        //    //u.receivePush -= ReceivePush;
-        //    u.GetComponentInChildren<UnitBlockGravity>().receiveGravity += ReceiveGravity;
-        //}
     }
 
     private void Update()
@@ -103,7 +89,6 @@ public class BlockContainer : MonoBehaviour
         if (shortestDistance == Mathf.Infinity)
         {
             // fall to void
-            //gravityTarget = grid.WorldToCell(transform.position + Vector3.down * 200f);
             foreach (MeshRenderer m in meshRenderers) { gravityTargets.Add(m.transform.position + Vector3.down * 200f); }
             gravity = 1 / 200f;
         }
@@ -129,12 +114,10 @@ public class BlockContainer : MonoBehaviour
         for (int i = 0; i < meshRenderers.Count; i++)
         {
             if (Vector3.Distance(meshRenderers[i].transform.position, gravityTargets[i]) > 0.1f) { return; }
-            //Debug.Log(name + " is in position: " + grid.WorldToCell(transform.position));
         }
         enableGravity = false;
         isPushable = true;
         for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(gravityTargets[i]); }
-        //Debug.Log("falling connect");
         for (int i = 0; i < blocks.Count; i++) { ConnectBlock(blocks[i]); }
         
         gravityTargets = new List<Vector3>();
@@ -150,13 +133,10 @@ public class BlockContainer : MonoBehaviour
         if (pushing) { return; }
         if (!isPushable) { return; }
         Vector3 pushDirection = block.GetPushDirection();
-        //Debug.Log(block.name + "received push from " + pushDirection);
         if (pushDirection == Vector3.zero) { return; }
-        //Debug.Log("push direction is not zero: " + pushDirection);
         foreach (UnitBlock u in blocks) 
         {             
-            //Debug.Log(u.name + " is being checked for isBlock from " + pushDirection + " (block container)");
-            if (u.IsBlocked(pushDirection)) {/* Debug.Log(u.name + " is blocked (block container)"); */return; }
+            if (u.IsBlocked(pushDirection)) { return; }
 
         }
         //Debug.Log(name + " is push");
@@ -173,7 +153,6 @@ public class BlockContainer : MonoBehaviour
         pushing = true;
         isPushable = false;
         foreach (MeshRenderer m in meshRenderers) { pushTargets.Add(grid.WorldToCell(m.transform.position + dir)); }
-        //pushTarget = transform.position + dir;
     }
     /// <summary>
     /// Lerp towards push target, and reset push state variables when finished lerping.
@@ -181,12 +160,9 @@ public class BlockContainer : MonoBehaviour
     private void Sliding()
     {
         if (!enablePush) { return; }
-        //Debug.Log("sliding but pushing");
         if (!pushing) { return; }
         timeElapsed += Time.smoothDeltaTime;
         timeElapsed = Mathf.MoveTowards(timeElapsed, duration, Time.smoothDeltaTime);
-        //transform.position = Vector3.Lerp(transform.position, pushTarget, timeElapsed * pushSpeed);
-        //Debug.Log("sliding");
         for (int i = 0; i < meshRenderers.Count; i++)
         {
             meshRenderers[i].transform.position = Vector3.Lerp(meshRenderers[i].transform.position, pushTargets[i], timeElapsed * gravity);
@@ -194,7 +170,6 @@ public class BlockContainer : MonoBehaviour
         for (int i = 0; i < meshRenderers.Count; i++)
         {
             if (Vector3.Distance(meshRenderers[i].transform.position, pushTargets[i]) > 0.1f) { return; }
-            //Debug.Log(name + " is in position: " + grid.WorldToCell(transform.position));
         }
         for (int i = 0; i < blocks.Count; i++) { blocks[i].Snap(pushTargets[i]); }
         pushing = false;
@@ -215,7 +190,6 @@ public class BlockContainer : MonoBehaviour
     }
     public void ConnectBlock(UnitBlock b)
     {
-        //Debug.Log("checking connect for " + b.name);
         if (color.ID >= 0) { return; }
         Vector3[] directions = { b.transform.forward, -b.transform.forward, b.transform.right, -b.transform.right, b.transform.up, -b.transform.up };
         RaycastHit hit;
@@ -223,11 +197,9 @@ public class BlockContainer : MonoBehaviour
         {
             if (Physics.Raycast(b.transform.position, dir, out hit) && hit.transform.gameObject.layer == unitBlockLayer && Vector3.Distance(b.transform.position, hit.point) < 1.1f)
             {
-                //Debug.Log("Hit unit block!!!");
                 UnitBlock bHit = hit.transform.gameObject.GetComponentInParent<UnitBlock>();
                 if (bHit.currentContainer == this || bHit == b) { continue; }
                 if (bHit.currentContainer.color.ID > 0 || bHit.currentContainer.color.ID != color.ID) { continue; }
-                //Debug.Log(b.name + " CONNECT!!! with " + bHit.transform.name);
                 foreach (UnitBlock block in bHit.currentContainer.blocks)
                 {
                     block.currentContainer = this;
@@ -236,16 +208,8 @@ public class BlockContainer : MonoBehaviour
                     meshRenderers.Add(block.GetComponentInChildren<MeshRenderer>());
                     
                 }
-                //bHit.currentContainer = this;
-                //bHit.transform.parent = transform;
-                //blocks.Add(bHit);
-                //meshRenderers.Add(bHit.GetComponentInChildren<MeshRenderer>());
             }
         }
-        //for(int i=0; i<blocks.Count; i++)
-        //{
-        //    Debug.Log(blocks[i].name + " is in blocks");
-        //}
     }
 
     private void PlaySound()
