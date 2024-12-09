@@ -23,6 +23,7 @@ public class BlockContainer : MonoBehaviour
     /// Push Variables
     /// </summary>
     private float duration = 1f;
+
     /// <summary>
     /// Push state
     /// </summary>
@@ -35,11 +36,16 @@ public class BlockContainer : MonoBehaviour
     /// Gravity Variables
     /// </summary>
     private float gravity = 1f;
+
     /// <summary>
     /// Gravity State
     /// </summary>
     private bool enableGravity = false;
     private List<Vector3> gravityTargets = new List<Vector3>();
+    /// <summary>
+    /// Sets properties of BlockContainer by getting the necessary components from the scene.
+    /// Then snaps the BlockContainer to the nearest grid cell.
+    /// </summary>
     private void Awake()
     {
         blocks = GetComponentsInChildren<UnitBlock>().ToList();
@@ -47,22 +53,25 @@ public class BlockContainer : MonoBehaviour
         grid = GameObject.Find("GridManager").GetComponent<Grid>();
         Snap(transform.position);
     }
-
+    /// <summary>
+    /// Attempt to fall due to gravity when enabled at the start of the scene.
+    /// </summary>
     private void OnEnable()
     {
         ReceiveGravity();
     }
-
+    /// <summary>
+    /// Handles / attempts to fall or slide each frame.
+    /// </summary>
     private void Update()
     {
         Falling();
         Sliding();
     }
     /// <summary>
-    /// Receives notification from a unit block to enable gravity.
-    /// If all other blocks can be affected by gravity, begin falling to the closest position.
+    /// Called by a UnitBlock in position to fall, possibly enablong gravity for all UnitBlocks in a BlockContainer.
+    /// If all other blocks can be affected by gravity, begin falling to the nearest ground.
     /// </summary>
-    /// <param name="block"></param>
     public void ReceiveGravity()
     {
         if (enableGravity) { return; }
@@ -97,7 +106,7 @@ public class BlockContainer : MonoBehaviour
         }
     }
     /// <summary>
-    /// 
+    /// Called at each frame when the entire BlockContainer is able to fall due to gravity.
     /// </summary>
     public void Falling()
     {
@@ -120,9 +129,10 @@ public class BlockContainer : MonoBehaviour
         gravityTargets = new List<Vector3>();
     }
     /// <summary>
-    /// Receive notification of a push, starts pushing if all unit blocks can be pushed in the push direction.
+    /// Called by a UnitBlock when it recieves a push from the player. 
+    /// Pushing/Sliding starts if all unit blocks can be pushed in the push direction.
     /// </summary>
-    /// <param name="block">The original unit block that was pushed. </param>
+    /// <param name="block"> The original unit block that was pushed. </param>
     public void ReceivePush(UnitBlock block)
     {
 
@@ -142,7 +152,7 @@ public class BlockContainer : MonoBehaviour
     /// <summary>
     /// Initializes push state variables
     /// </summary>
-    /// <param name="dir"> The direction to push in </param>
+    /// <param name="dir"> The direction to push in. </param>
     public void PushBlockContainer(Vector3 dir)
     {
         if (!enablePush) { return; }
@@ -182,9 +192,12 @@ public class BlockContainer : MonoBehaviour
     /// <param name="target"> Target should be the nearest point on grid. </param>
     public void Snap(Vector3 target)
     {
-        //Debug.Log("Snap");
         transform.position = grid.WorldToCell(target);
     }
+    /// <summary>
+    /// Connects a UnitBlock and UnitBlocks in its parent BlockContainer when it comes in contact with a UnitBlock in this BlockContainer.
+    /// </summary>
+    /// <param name="b"> The UnitBlock that came into contact with this BlockContainer. </param>
     public void ConnectBlock(UnitBlock b)
     {
         if (color.ID >= 0) { return; }
@@ -208,7 +221,9 @@ public class BlockContainer : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Plays the sound for a block push.
+    /// </summary>
     private void PlaySound()
     {
         int i = Random.Range(0, soundToPlay.Length - 1);
