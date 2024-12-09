@@ -12,7 +12,6 @@ public class BlockContainer : MonoBehaviour
 
     public Grid grid;
     public List<UnitBlock> blocks { get; private set; }
-    List<BoxCollider> blockColliders;
     List<MeshRenderer> meshRenderers;
     public delegate void StartPush();
     public StartPush startPush;
@@ -23,7 +22,6 @@ public class BlockContainer : MonoBehaviour
     /// <summary>
     /// Push Variables
     /// </summary>
-    private float pushSpeed = 1f;
     private float duration = 1f;
     /// <summary>
     /// Push state
@@ -32,7 +30,6 @@ public class BlockContainer : MonoBehaviour
     private bool pushing = false;
     private float timeElapsed = 0f;
     private List<Vector3> pushTargets = new List<Vector3>();
-    //private Vector3 pushTarget;
 
     /// <summary>
     /// Gravity Variables
