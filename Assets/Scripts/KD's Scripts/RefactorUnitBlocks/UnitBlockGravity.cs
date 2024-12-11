@@ -15,7 +15,6 @@ public class UnitBlockGravity : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(name + "exits " + other.name + " and " + block.currentContainer.transform.name + "receives gravity");
         block.currentContainer.ReceiveGravity();
     }
 
